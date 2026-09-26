@@ -8,6 +8,8 @@
 // The card sets --p (progress, 0–1) and data-state, which the CSS uses to animate the art.
 (function(VT){
   const clip = (name, fallback) => ({ clip: `sounds/${name}.mp3`, fallback });
+  // Card ids go into SVG id/url() attributes; keep only safe characters.
+  const uid = card => String(card.id).replace(/[^a-z0-9]/gi, '');
   const svg = (inner, fit = 'xMaxYMax meet', cls = '') => `<svg viewBox="0 0 200 200" preserveAspectRatio="${fit}"${cls ? ` class="${cls}"` : ''}>${inner}</svg>`;
   // Art can also sit in the top-right corner (behind the header) or run full width.
   const svgTop = inner => svg(inner, 'xMaxYMin meet', 'tr');
@@ -45,9 +47,9 @@
         lap: 'tap', step: 'tap', stepDown: 'tapLow', target: 'success', allDone: 'success'
       },
       art: card => svg(`
-        <defs><radialGradient id="mBlob-${card.id}"><stop offset="0" stop-color="currentColor" stop-opacity=".22"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>
-        <circle class="m-blob a" cx="175" cy="25" r="80" fill="url(#mBlob-${card.id})"/>
-        <circle class="m-blob b" cx="15" cy="195" r="90" fill="url(#mBlob-${card.id})"/>
+        <defs><radialGradient id="mBlob-${uid(card)}"><stop offset="0" stop-color="currentColor" stop-opacity=".22"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>
+        <circle class="m-blob a" cx="175" cy="25" r="80" fill="url(#mBlob-${uid(card)})"/>
+        <circle class="m-blob b" cx="15" cy="195" r="90" fill="url(#mBlob-${uid(card)})"/>
         <circle class="m-ring" cx="175" cy="25" r="46" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6"/>`, 'xMidYMid slice')
     },
 
@@ -122,15 +124,15 @@
       },
       art: card => svg(`
         <defs>
-          <linearGradient id="nSun-${card.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd319"/><stop offset=".6" stop-color="#ff5f8f"/><stop offset="1" stop-color="#ff2a6d"/></linearGradient>
-          <clipPath id="nSky-${card.id}"><rect width="200" height="150"/></clipPath>
-          <clipPath id="nFloor-${card.id}"><rect y="150" width="200" height="50"/></clipPath>
+          <linearGradient id="nSun-${uid(card)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd319"/><stop offset=".6" stop-color="#ff5f8f"/><stop offset="1" stop-color="#ff2a6d"/></linearGradient>
+          <clipPath id="nSky-${uid(card)}"><rect width="200" height="150"/></clipPath>
+          <clipPath id="nFloor-${uid(card)}"><rect y="150" width="200" height="50"/></clipPath>
         </defs>
-        <g class="n-sun" clip-path="url(#nSky-${card.id})">
-          <circle cx="100" cy="150" r="48" fill="url(#nSun-${card.id})"/>
+        <g class="n-sun" clip-path="url(#nSky-${uid(card)})">
+          <circle cx="100" cy="150" r="48" fill="url(#nSun-${uid(card)})"/>
           <rect class="n-cut" x="40" y="126" width="120" height="3"/><rect class="n-cut" x="40" y="134" width="120" height="4"/><rect class="n-cut" x="40" y="143" width="120" height="5"/>
         </g>
-        <g class="n-grid" clip-path="url(#nFloor-${card.id})">
+        <g class="n-grid" clip-path="url(#nFloor-${uid(card)})">
           <line x1="0" y1="150" x2="200" y2="150"/>
           ${[-140, -80, -40, -12, 12, 40, 80, 140].map(x => `<line x1="100" y1="150" x2="${100 + x * 2}" y2="200"/>`).join('')}
           <g class="n-h">${[154, 162, 174, 190, 210].map(y => `<line x1="0" y1="${y}" x2="200" y2="${y}"/>`).join('')}</g>
@@ -359,10 +361,10 @@
       art: card => {
         const heart = 'M0 14C-26-4-22-30 0-18C22-30 26-4 0 14Z';
         return svg(`
-          <defs><clipPath id="vHeart-${card.id}"><path d="${heart}" transform="translate(150 140) scale(1.9)"/></clipPath></defs>
+          <defs><clipPath id="vHeart-${uid(card)}"><path d="${heart}" transform="translate(150 140) scale(1.9)"/></clipPath></defs>
           <g class="v-floaters">${[[40, 0], [70, 1], [100, 2], [124, 3], [20, 4]].map(([x, i]) => `<path style="--i:${i}" transform="translate(${x} 200) scale(.35)" d="${heart}"/>`).join('')}</g>
           <path class="v-heart-bg" d="${heart}" transform="translate(150 140) scale(1.9)"/>
-          <g clip-path="url(#vHeart-${card.id})"><rect class="v-fill" x="90" y="100" width="120" height="70"/></g>
+          <g clip-path="url(#vHeart-${uid(card)})"><rect class="v-fill" x="90" y="100" width="120" height="70"/></g>
           <path class="v-heart" d="${heart}" transform="translate(150 140) scale(1.9)"/>`);
       }
     },
@@ -473,9 +475,9 @@
           <g transform="translate(0 ${200 - 60 * sc}) scale(${sc})"><path class="ed-top" d="M-11 12L0 0 11 12Z"/><path class="ed-glass" d="M-17 12H17L13 48H-13Z"/>
             <path class="ed-frame" d="M-17 12H17L13 48H-13ZM0 12V48M-15 30H15"/><path class="ed-top" d="M-13 48H13L6 58H-6Z"/></g></g></g>`;
         return svgTop(`
-            <defs><mask id="eMoon-${card.id}"><rect width="200" height="200" fill="#fff"/><circle cx="168" cy="46" r="36" fill="#000"/></mask></defs>
+            <defs><mask id="eMoon-${uid(card)}"><rect width="200" height="200" fill="#fff"/><circle cx="168" cy="46" r="36" fill="#000"/></mask></defs>
             <g class="ed-stars">${[[70, 30], [96, 70], [60, 100], [120, 16]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="2.4" style="--i:${i}"/>`).join('')}</g>
-            <circle class="ed-moon" cx="150" cy="60" r="44" mask="url(#eMoon-${card.id})"/>
+            <circle class="ed-moon" cx="150" cy="60" r="44" mask="url(#eMoon-${uid(card)})"/>
             <path class="ed-star" d="M178 104l3.6 7.5 8.1.9-6 5.6 1.7 8-7.4-4.1-7.4 4.1 1.7-8-6-5.6 8.1-.9Z"/>`)
           + svg(`${fanous(176, 26, 0, 1)}${fanous(134, 14, 1, .75)}`);
       }

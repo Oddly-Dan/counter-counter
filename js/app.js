@@ -15,19 +15,73 @@
   ];
 
   // ---------- State ----------
+  // Saved state is untrusted: another page on the same origin (e.g. other GitHub Pages
+  // projects) can write to localStorage. load() rebuilds everything from known-good values,
+  // keeping a saved field only when it has the same type as the card's default.
+  const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const ID_RE = /^c[a-z0-9]{4,32}$/;
+  const STATUSES = ['idle', 'running', 'paused', 'alarming', 'finished'];
+  const isNum = v => typeof v === 'number' && Number.isFinite(v);
+  const numIn = (v, lo, hi, dflt) => isNum(v) ? VT.clamp(v, lo, hi) : dflt;
+  const oneOf = (v, list, dflt) => list.includes(v) ? v : dflt;
+
+  function cleanField(v, dflt){
+    if(dflt === null) return v === null || isNum(v) || (typeof v === 'string' && /^[\d-]{1,20}$/.test(v)) ? v : null;
+    if(Array.isArray(dflt)) return Array.isArray(v) ? v.filter(isNum).slice(0, 1000) : dflt;
+    if(typeof dflt === 'number') return isNum(v) ? v : dflt;
+    if(typeof dflt === 'boolean') return typeof v === 'boolean' ? v : dflt;
+    if(typeof dflt === 'string') return typeof v === 'string' ? v.slice(0, 200) : dflt;
+    return dflt;
+  }
+
+  function cleanCard(c){
+    if(!c || typeof c !== 'object' || typeof c.type !== 'string' || !own(T, c.type) || typeof c.id !== 'string' || !ID_RE.test(c.id)) return null;
+    const type = T[c.type], out = {
+      id: c.id, type: c.type,
+      title: typeof c.title === 'string' && c.title.trim() ? c.title.slice(0, 40) : type.label,
+      theme: typeof c.theme === 'string' && own(VT.themes, c.theme) ? c.theme : 'modern',
+      volume: numIn(c.volume, 0, 1, 0.8), muted: c.muted === true,
+      span: { c: Math.round(numIn(c.span && c.span.c, 1, 3, 1)), r: Math.round(numIn(c.span && c.span.r, 1, 2, 1)) },
+      createdAt: numIn(c.createdAt, 0, 8.64e15, Date.now())
+    };
+    for(const [k, dflt] of Object.entries(type.defaults())) out[k] = cleanField(c[k], dflt);
+    out.status = oneOf(out.status, STATUSES, 'idle');
+    if(out.type === 'voice') for(const k of ['start', 'target', 'step', 'current']) if(!/^-?\d{1,400}$/.test(out[k])) out[k] = type.defaults()[k];
+    if(out.type === 'voice' && out.step === '0') out.step = '1';
+    if(out.type === 'sleeps'){
+      if(!own(T.sleeps.events, out.event)) out.event = 'christmas';
+      if(!/^(\d{4}-\d{2}-\d{2})?$/.test(out.date)) out.date = '';
+    }
+    return out;
+  }
+
   function load(){
     try{
       const s = JSON.parse(localStorage.getItem(KEY));
-      if(!s || !s.cards) return null;
-      s.settings = Object.assign({}, DEFAULT_SETTINGS, s.settings);
-      s.history = Object.assign({ added: 0, removed: 0, completed: 0 }, s.history);
-      s.order = s.order.filter(id => s.cards[id]);
-      for(const c of Object.values(s.cards)){
-        if(!T[c.type]){ delete s.cards[c.id]; continue; }
-        if(!VT.themes[c.theme]) c.theme = 'modern';
-        if(!s.order.includes(c.id)) s.order.push(c.id);
+      if(!s || typeof s !== 'object' || !s.cards || typeof s.cards !== 'object') return null;
+      const cards = {};
+      for(const raw of Object.values(s.cards)){
+        const c = cleanCard(raw);
+        if(c && !own(cards, c.id)) cards[c.id] = c;
       }
-      return s;
+      const order = (Array.isArray(s.order) ? s.order : []).filter((id, i, a) => typeof id === 'string' && own(cards, id) && a.indexOf(id) === i);
+      for(const id of Object.keys(cards)) if(!order.includes(id)) order.push(id);
+
+      const raw = s.settings && typeof s.settings === 'object' ? s.settings : {};
+      const settings = {};
+      for(const [k, dflt] of Object.entries(DEFAULT_SETTINGS)) settings[k] = cleanField(raw[k], dflt);
+      const sorts = [...document.querySelectorAll('#sortSel option')].map(o => o.value);
+      settings.master = numIn(settings.master, 0, 1, DEFAULT_SETTINGS.master);
+      settings.defaultTheme = own(VT.themes, settings.defaultTheme) ? settings.defaultTheme : 'modern';
+      settings.density = oneOf(settings.density, ['auto', 'comfy', 'compact'], 'auto');
+      settings.sort = oneOf(settings.sort, sorts, 'manual');
+      settings.filter = oneOf(settings.filter, ['all', 'running', 'paused', 'finished'], 'all');
+      settings.typeFilter = settings.typeFilter === 'all' || (own(T, settings.typeFilter) && settings.typeFilter !== 'stats') ? settings.typeFilter : 'all';
+      settings.max = oneOf(settings.max, [24, 48], 24);
+
+      const h = s.history && typeof s.history === 'object' ? s.history : {};
+      const history = { added: numIn(h.added, 0, 1e9, 0), removed: numIn(h.removed, 0, 1e9, 0), completed: numIn(h.completed, 0, 1e9, 0) };
+      return { cards, order, settings, history };
     }catch(e){ return null; }
   }
   const S = VT.state = load() || { cards: {}, order: [], settings: { ...DEFAULT_SETTINGS }, history: { added: 0, removed: 0, completed: 0 } };
@@ -292,7 +346,7 @@
         <p class="theme-credit" ${VT.credits.themeHasClips(card.theme) ? '' : 'hidden'}>Uses CC0 sounds by Joseph Sardin · <button class="linkish" data-p="credits">Credits</button></p>
       </div>
       <div class="pop-sec vol-pop">
-        <button class="icon-btn" data-p="mute" aria-label="Mute card" aria-pressed="${card.muted}">${volIcon(card)}</button>
+        <button class="icon-btn" data-p="mute" aria-label="Mute card" aria-pressed="${card.muted === true}">${volIcon(card)}</button>
         <input type="range" min="0" max="100" value="${Math.round(card.volume * 100)}" aria-label="Card volume" data-p="vol">
         <button class="btn small" data-p="test">Test</button>
       </div>
@@ -331,7 +385,7 @@
   function volumeMenu(card, anchor){
     const html = `
       <div class="pop-sec vol-pop">
-        <button class="icon-btn" data-p="mute" aria-label="Mute card" aria-pressed="${card.muted}">${volIcon(card)}</button>
+        <button class="icon-btn" data-p="mute" aria-label="Mute card" aria-pressed="${card.muted === true}">${volIcon(card)}</button>
         <input type="range" min="0" max="100" value="${Math.round(card.volume * 100)}" aria-label="Card volume" data-p="vol">
         <button class="btn small" data-p="test">Test</button>
       </div>`;
