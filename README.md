@@ -41,7 +41,7 @@ Density can be set to Auto, Comfy (always Large) or Compact (always Mini). The l
 
 ## Themes
 
-There are 16 themes, each with a light and a dark variant that follows the system setting:
+There are 16 everyday themes and 6 holiday themes, each with a light and a dark variant that follows the system setting.
 
 | Theme | Look | Moves | Sounds |
 |---|---|---|---|
@@ -62,7 +62,18 @@ There are 16 themes, each with a light and a dark variant that follows the syste
 | Candy | Pastel stripes | Lollipop shrinks, sprinkles | Pops, fizz, party horn |
 | Steampunk | Brass and leather | Gears turn, pressure gauge, steam | Steam hiss and whistle, ratchet |
 
-A theme is a `.theme-<id>` block of `--t-*` tokens in `css/themes.css`, plus an entry in `js/themes.js` with its sound set and SVG art. The art reacts to the card's `data-state` and `--p` (progress). All motion stops when the system's reduced-motion setting is on. Holiday themes are next: see [ROADMAP.md](ROADMAP.md).
+| Holiday theme | Look | Moves | Sounds |
+|---|---|---|---|
+| Christmas | Red, green and gold | Fairy lights twinkle, snow falls, the present opens | Sleigh bells, ho ho ho, Jingle Bells |
+| Halloween | Pumpkin orange on midnight purple | Jack-o'-lantern flickers, bats scatter | Creaking door, owl, witch's cackle, bone xylophone |
+| Easter | Pastels | The egg cracks with progress, a chick pops out | Chick chirps, egg taps, boing |
+| Valentine's Day | Pinks and reds | The heart fills with progress, hearts float up | Kiss, heartbeat, harp |
+| New Year | Midnight and gold | Champagne bubbles, fireworks | Glasses clink, cork pop, fireworks, cheering |
+| Bonfire Night | Smoky night sky | Sparkler trail, bonfire, rockets | Sparkler, firecracker, fireworks, whoosh |
+
+A Sleeps card for a holiday picks up the matching theme when you add it from the Add menu, and when you change its event in Settings. Untick "Use the holiday's theme" to keep your own.
+
+A theme is a `.theme-<id>` block of `--t-*` tokens in `css/themes.css`, plus an entry in `js/themes.js` with its sound set and SVG art. The art reacts to the card's `data-state` and `--p` (progress). All motion stops when the system's reduced-motion setting is on. More holiday themes are planned: see [ROADMAP.md](ROADMAP.md).
 
 ## Credits
 

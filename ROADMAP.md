@@ -4,18 +4,19 @@
 
 Seasonal themes to pair with the Sleeps card. Each one needs light and dark tokens, SVG art with animations for each state, and a sound set (synthesised, or CC0 clips credited in `js/credits.js`).
 
-- [ ] **Christmas:** red, green and gold. Snow falls while running, a present unwraps at the alarm. Sleigh bells, a ho-ho-ho, jingle bells.
-- [ ] **Halloween:** pumpkin orange and midnight purple. A jack-o'-lantern flickers, bats fly off at the alarm. Creaky door, owl, a cackle.
-- [ ] **Easter:** pastel eggs. An egg cracks open as progress fills and a chick pops out. Chirps, a spring boing.
-- [ ] **Valentine's Day:** pinks and reds. A heart fills with progress, hearts float up at the alarm. A soft chime, a kiss.
-- [ ] **New Year:** midnight blue and gold. Confetti and fireworks at the alarm, a countdown beep. Fireworks, party horn, cheering.
-- [ ] **Bonfire Night:** smoky night sky, sparklers and rockets. Crackle, whoosh, bang.
+- [x] **Christmas:** red, green and gold. Snow falls while running, a present unwraps at the alarm. Sleigh bells, a ho-ho-ho, jingle bells.
+- [x] **Halloween:** pumpkin orange and midnight purple. A jack-o'-lantern flickers, bats fly off at the alarm. Creaky door, owl, a cackle.
+- [x] **Easter:** pastel eggs. An egg cracks open as progress fills and a chick pops out. Chirps, a spring boing.
+- [x] **Valentine's Day:** pinks and reds. A heart fills with progress, hearts float up at the alarm. A soft chime, a kiss.
+- [x] **New Year:** midnight blue and gold. Confetti and fireworks at the alarm, a countdown beep. Fireworks, party horn, cheering.
+- [x] **Bonfire Night:** smoky night sky, sparklers and rockets. Crackle, whoosh, bang.
 - [ ] **Diwali:** diyas light up with progress, rangoli art. Bells, sparklers.
 - [ ] **Hanukkah:** menorah candles light with progress. A gentle chime.
 - [ ] **Lunar New Year:** red and gold lanterns, a dragon at the alarm. Gong, firecrackers.
 - [ ] **Eid:** crescent moon and lanterns in night blue and gold. A soft chime.
 - [ ] **Midsummer / Summer holidays:** sun, beach, ice cream melting with progress. Waves, seagulls.
-- [ ] Suggest the matching holiday theme when a Sleeps card is set to that holiday, and switch to it on the day if the user wants.
+- [x] Pair Sleeps cards with the matching holiday theme.
+- [ ] Optionally switch every card to the holiday theme on the day itself.
 
 ## Cards
 

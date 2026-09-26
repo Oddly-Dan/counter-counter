@@ -286,7 +286,7 @@
     const size = `${card.span.c}x${card.span.r}`;
     const html = `
       <div class="pop-sec">
-        <label class="field"><span>Theme</span><select data-p="theme">${VT.themeOrder.map(t => `<option value="${t}"${t === card.theme ? ' selected' : ''}>${VT.themes[t].name}</option>`).join('')}</select></label>
+        <label class="field"><span>Theme</span><select data-p="theme">${VT.themeOptions(card.theme)}</select></label>
         <p class="theme-credit" ${VT.credits.themeHasClips(card.theme) ? '' : 'hidden'}>Uses CC0 sounds by Joseph Sardin · <button class="linkish" data-p="credits">Credits</button></p>
       </div>
       <div class="pop-sec vol-pop">
@@ -372,7 +372,7 @@
     $('#dlgTitle').textContent = `${T[card.type].label} settings`;
     $('#dlgFields').innerHTML = `
       <label class="field"><span>Name</span><input name="title" maxlength="40" value="${VT.esc(card.title)}" required></label>
-      <label class="field"><span>Theme</span><select name="theme">${VT.themeOrder.map(t => `<option value="${t}"${t === card.theme ? ' selected' : ''}>${VT.themes[t].name}</option>`).join('')}</select></label>
+      <label class="field"><span>Theme</span><select name="theme">${VT.themeOptions(card.theme)}</select></label>
       ${T[card.type].fields ? T[card.type].fields(card) : ''}`;
     dlg.showModal();
   }
@@ -381,9 +381,10 @@
     dlgCard = null;
     if(!card || dlg.returnValue !== 'save' || !S.cards[card.id]) return;
     const fd = new FormData(form);
+    const prevTheme = card.theme;
     card.title = (fd.get('title') || '').trim() || card.title;
     card.theme = fd.get('theme');
-    if(T[card.type].apply) T[card.type].apply(card, fd);
+    if(T[card.type].apply) T[card.type].apply(card, fd, { prevTheme });
     syncChrome(card, els.get(card.id));
     VT.app.changed(card);
     els.get(card.id).focus({ preventScroll: true });
@@ -632,7 +633,7 @@
       pop.querySelectorAll('[data-sleeps]').forEach(b => b.onclick = () => {
         VT.pop.close(false);
         const ev = b.dataset.sleeps;
-        addCard('sleeps', { event: ev, title: ev === 'custom' ? 'My day' : T.sleeps.events[ev].name });
+        addCard('sleeps', { event: ev, title: ev === 'custom' ? 'My day' : T.sleeps.events[ev].name, ...(VT.holidayTheme[ev] ? { theme: VT.holidayTheme[ev] } : {}) });
         if(ev === 'custom'){ const c = S.cards[S.order[S.order.length - 1]]; if(c && c.type === 'sleeps') openSettings(c); }
       });
       pop.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
@@ -695,7 +696,7 @@
   syncMaster();
 
   const defTheme = $('#defaultTheme');
-  defTheme.innerHTML = VT.themeOrder.map(t => `<option value="${t}">${VT.themes[t].name}</option>`).join('');
+  defTheme.innerHTML = VT.themeOptions(S.settings.defaultTheme);
   defTheme.value = S.settings.defaultTheme;
   defTheme.onchange = () => { S.settings.defaultTheme = defTheme.value; VT.save(); };
   $('#applyTheme').onclick = () => {
