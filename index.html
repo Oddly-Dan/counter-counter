@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Counter Counter: themed cards of timers, stopwatches and counters that resize, reorder and sort.">
+<meta name="color-scheme" content="light dark">
+<title>Counter Counter</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Crect x='6' y='7' width='9' height='8' rx='2' fill='%23fff'/%3E%3Crect x='17' y='7' width='9' height='8' rx='2' fill='%23fff' opacity='.6'/%3E%3Crect x='6' y='17' width='9' height='8' rx='2' fill='%23fff' opacity='.6'/%3E%3Crect x='17' y='17' width='9' height='8' rx='2' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;700&family=Space+Mono:wght@700&family=Fredoka:wght@500;600&family=Press+Start+2P&family=Orbitron:wght@700&family=Nunito:wght@800&family=Cormorant+Garamond:wght@500&family=Quicksand:wght@700&family=Bitter:wght@700&family=VT323&family=Bebas+Neue&family=Cinzel:wght@600&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+<a class="skip" href="#grid">Skip to cards</a>
+
+<header class="topbar">
+  <div class="brand" aria-hidden="true"><span class="brand-mark"></span><span class="brand-name">Counter Counter</span></div>
+  <div class="bar-main">
+    <button id="addBtn" class="btn primary" aria-haspopup="true" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <span>Add</span>
+    </button>
+    <label class="sel"><span class="sr-only">Sort cards</span>
+      <select id="sortSel">
+        <option value="manual">Manual order</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="remaining">Least time remaining</option>
+        <option value="elapsed">Most time elapsed</option>
+        <option value="attention">Needs attention</option>
+        <option value="name">Name A–Z</option>
+        <option value="type">Type</option>
+        <option value="theme">Theme</option>
+        <option value="value">Counter value</option>
+      </select>
+    </label>
+    <button id="keepSorted" class="btn toggle" aria-pressed="false" title="Re-sort every 5 seconds">Keep sorted</button>
+    <button id="moreBtn" class="btn icon more-btn" aria-expanded="false" aria-controls="barMore" aria-label="More controls">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="5.5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="18.5" cy="12" r="1.8"/></svg>
+    </button>
+  </div>
+
+  <div class="bar-more" id="barMore">
+    <div class="chips" role="group" aria-label="Show">
+      <button class="chip" data-filter="all">All</button>
+      <button class="chip" data-filter="running">Running</button>
+      <button class="chip" data-filter="paused">Paused</button>
+      <button class="chip" data-filter="finished">Ended</button>
+    </div>
+    <label class="sel"><span class="sr-only">Card type</span><select id="typeFilter"></select></label>
+    <div class="group">
+      <button id="pauseAll" class="btn">Pause all</button>
+      <button id="resumeAll" class="btn">Resume all</button>
+    </div>
+    <div class="group master">
+      <button id="masterMute" class="btn icon" aria-label="Mute everything" aria-pressed="false"></button>
+      <input id="masterVol" type="range" min="0" max="100" aria-label="Master volume">
+    </div>
+    <div class="group">
+      <label class="sel"><span class="lbl-inline">Theme</span><select id="defaultTheme" aria-label="Theme for new cards"></select></label>
+      <button id="applyTheme" class="btn" title="Apply this theme to every card">Apply to all</button>
+    </div>
+    <label class="sel"><span class="lbl-inline">Density</span>
+      <select id="densitySel">
+        <option value="auto">Auto</option>
+        <option value="comfy">Comfy</option>
+        <option value="compact">Compact</option>
+      </select>
+    </label>
+    <label class="sel"><span class="lbl-inline">Limit</span>
+      <select id="maxSel">
+        <option value="24">24 cards</option>
+        <option value="48">48 cards</option>
+      </select>
+    </label>
+    <button id="creditsBtn" class="btn" aria-haspopup="dialog">About &amp; credits</button>
+    <button id="fsBtn" class="btn icon" aria-label="Full screen">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div id="empty" class="empty" hidden>
+    <h1>Nothing counting yet</h1>
+    <p>Add a card to start. Drag the dotted handle to reorder, and the corner grip to resize.</p>
+    <div class="empty-actions">
+      <button class="btn primary" data-quick="timer">Timer</button>
+      <button class="btn" data-quick="stopwatch">Stopwatch</button>
+      <button class="btn" data-quick="counter">Counter</button>
+      <button class="btn" data-quick="voice">Voice Tally</button>
+      <button class="btn" data-quick="stats">Card Stats</button>
+    </div>
+  </div>
+  <p id="noMatch" class="empty small" hidden>No cards match this filter.</p>
+  <section id="grid" class="grid" aria-label="Cards"></section>
+</main>
+
+<p id="dragHelp" class="sr-only">Press Space to pick up, arrow keys to move, Space to drop.</p>
+<div id="toasts" class="toasts" role="status"></div>
+<div id="live" class="sr-only" aria-live="polite"></div>
+<button id="soundGate" class="sound-gate" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  Tap anywhere to turn sound on
+</button>
+<div id="popover" class="popover" hidden></div>
+
+<dialog id="settingsDlg" aria-labelledby="dlgTitle">
+  <form id="settingsForm" method="dialog">
+    <h2 id="dlgTitle">Settings</h2>
+    <div id="dlgFields" class="dlg-fields"></div>
+    <div class="dlg-actions">
+      <button type="button" id="dlgCancel" class="btn">Cancel</button>
+      <button value="save" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<footer class="page-foot">
+  <button class="linkish" data-credits>Credits</button> · Sounds CC0 by Joseph Sardin, BigSoundBank.com · <a href="https://github.com/Oddly-Dan/counter-counter">GPL-3.0 source</a>
+</footer>
+
+<dialog id="creditsDlg" class="wide" aria-labelledby="creditsTitle">
+  <div class="dlg-body">
+    <h2 id="creditsTitle">About &amp; credits</h2>
+    <div id="creditsBody"></div>
+    <div class="dlg-actions"><button type="button" class="btn primary" data-close>Close</button></div>
+  </div>
+</dialog>
+
+<noscript><p class="empty">Counter Counter needs JavaScript.</p></noscript>
+<script src="js/util.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/themes.js"></script>
+<script src="js/credits.js"></script>
+<script src="js/types.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
