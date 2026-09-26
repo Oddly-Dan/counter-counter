@@ -10,17 +10,18 @@ Seasonal themes to pair with the Sleeps card. Each one needs light and dark toke
 - [x] **Valentine's Day:** pinks and reds. A heart fills with progress, hearts float up at the alarm. A soft chime, a kiss.
 - [x] **New Year:** midnight blue and gold. Confetti and fireworks at the alarm, a countdown beep. Fireworks, party horn, cheering.
 - [x] **Bonfire Night:** smoky night sky, sparklers and rockets. Crackle, whoosh, bang.
-- [ ] **Diwali:** diyas light up with progress, rangoli art. Bells, sparklers.
-- [ ] **Hanukkah:** menorah candles light with progress. A gentle chime.
-- [ ] **Lunar New Year:** red and gold lanterns, a dragon at the alarm. Gong, firecrackers.
-- [ ] **Eid:** crescent moon and lanterns in night blue and gold. A soft chime.
-- [ ] **Midsummer / Summer holidays:** sun, beach, ice cream melting with progress. Waves, seagulls.
+- [x] **Diwali:** diyas light up with progress, rangoli art. Bells, sparklers.
+- [x] **Hanukkah:** menorah candles light with progress. A gentle chime.
+- [x] **Lunar New Year:** red and gold lanterns, a dragon at the alarm. Gong, firecrackers.
+- [x] **Eid:** crescent moon and lanterns in night blue and gold. A soft chime.
+- [x] **Midsummer / Summer holidays:** sun, beach, ice cream melting with progress. Waves, seagulls.
 - [x] Pair Sleeps cards with the matching holiday theme.
 - [ ] Optionally switch every card to the holiday theme on the day itself.
 
 ## Cards
 
-- [ ] Sleeps: more presets (Mother's Day and Father's Day, which move each year; Diwali, Hanukkah and Eid dates from a small table), and an optional time of day with an hours countdown on the last day.
+- [x] Sleeps: Diwali, Hanukkah, Lunar New Year and Eid dates from a table (to 2031).
+- [ ] Sleeps: extend the date table past 2031; add Mother's Day and Father's Day (which differ by country); an optional time of day with an hours countdown on the last day.
 - [ ] Save any timer as a custom preset in the Add menu.
 - [ ] Voice Tally: let several cards take turns speaking.
 

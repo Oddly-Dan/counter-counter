@@ -48,3 +48,8 @@ Every clip is by Joseph Sardin, from [BigSoundBank.com](https://bigsoundbank.com
 | `sparkler.mp3` | [Sparkling Candle #1](https://bigsoundbank.com/sparkling-candle-1-s1278.html) | Joseph Sardin | CC0 1.0 |
 | `champagne-cork.mp3` | [Champagne cork #2](https://bigsoundbank.com/champagne-cork-2-s0648.html) | Joseph Sardin | CC0 1.0 |
 | `glasses-clink.mp3` | [Cheers, Champagne Flute #1](https://bigsoundbank.com/cheers-champagne-flute-1-s1335.html) | Joseph Sardin | CC0 1.0 |
+| `gong.mp3` | [Gong, sweet](https://bigsoundbank.com/gong-sweet-s1482.html) | Joseph Sardin | CC0 1.0 |
+| `hand-bell.mp3` | [Small Bell #1](https://bigsoundbank.com/small-bell-1-s0292.html) | Joseph Sardin | CC0 1.0 |
+| `gulls.mp3` | [Gulls on the Harbor](https://bigsoundbank.com/gulls-on-the-harbor-s2573.html) | Joseph Sardin | CC0 1.0 |
+| `beach-waves.mp3` | [Beach: Small Waves](https://bigsoundbank.com/beach-small-waves-s0265.html) | Joseph Sardin | CC0 1.0 |
+| `firecrackers.mp3` | [Firecrackers (layered into a string)](https://bigsoundbank.com/firecrackers-s0919.html) | Joseph Sardin | CC0 1.0 |

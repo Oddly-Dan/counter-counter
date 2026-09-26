@@ -446,15 +446,32 @@
     const n = h + l - 7 * m + 114;
     return [Math.floor(n / 31), n % 31 + 1];
   }
+  // Holidays that move each year come from a table (source: timeanddate.com, UK listings).
+  // Past the last listed year the card says the date isn't known yet.
+  const table = rows => y => rows[y] || null;
+  const DIWALI = { 2025: [10, 20], 2026: [11, 8], 2027: [10, 29], 2028: [10, 17], 2029: [11, 5], 2030: [10, 26], 2031: [11, 14] };
+  const HANUKKAH = { 2025: [12, 15], 2026: [12, 5], 2027: [12, 25], 2028: [12, 13], 2029: [12, 2], 2030: [12, 21], 2031: [12, 10] };
+  const LUNAR_NEW_YEAR = { 2025: [1, 29], 2026: [2, 17], 2027: [2, 6], 2028: [1, 26], 2029: [2, 13], 2030: [2, 3], 2031: [1, 23] };
+  const EID_FITR = { 2025: [3, 30], 2026: [3, 21], 2027: [3, 10], 2028: [2, 27], 2029: [2, 15], 2030: [2, 5], 2031: [1, 25] };
+  const EID_ADHA = { 2025: [6, 6], 2026: [5, 27], 2027: [5, 17], 2028: [5, 5], 2029: [4, 24], 2030: [4, 14], 2031: [4, 3] };
+  const MOON = 'Eid dates depend on the moon sighting and can move by a day.';
+
+  // In calendar order, so the settings list reads naturally.
   const EVENTS = {
-    christmas: { name: 'Christmas', md: [12, 25] },
-    christmasEve: { name: 'Christmas Eve', md: [12, 24] },
-    newYear: { name: 'New Year’s Day', md: [1, 1] },
-    valentines: { name: 'Valentine’s Day', md: [2, 14] },
-    easter: { name: 'Easter Sunday', md: easter },
-    halloween: { name: 'Halloween', md: [10, 31] },
-    bonfire: { name: 'Bonfire Night', md: [11, 5] },
-    custom: { name: 'My day' }
+    newYear: { name: 'New Year\u2019s Day', short: 'New Year', md: [1, 1] },
+    lunarNewYear: { name: 'Lunar New Year', short: 'Lunar New Year', md: table(LUNAR_NEW_YEAR) },
+    valentines: { name: 'Valentine\u2019s Day', short: 'Valentine\u2019s', md: [2, 14] },
+    eidFitr: { name: 'Eid al-Fitr', short: 'Eid al-Fitr', md: table(EID_FITR), note: MOON },
+    easter: { name: 'Easter Sunday', short: 'Easter', md: easter },
+    eidAdha: { name: 'Eid al-Adha', short: 'Eid al-Adha', md: table(EID_ADHA), note: MOON },
+    midsummer: { name: 'Midsummer', short: 'Midsummer', md: [6, 21] },
+    halloween: { name: 'Halloween', short: 'Halloween', md: [10, 31] },
+    diwali: { name: 'Diwali', short: 'Diwali', md: table(DIWALI) },
+    bonfire: { name: 'Bonfire Night', short: 'Bonfire Night', md: [11, 5] },
+    hanukkah: { name: 'Hanukkah', short: 'Hanukkah', md: table(HANUKKAH), note: 'Counts to the first day. The first candle is lit the evening before.' },
+    christmasEve: { name: 'Christmas Eve', short: 'Christmas Eve', md: [12, 24] },
+    christmas: { name: 'Christmas', short: 'Christmas', md: [12, 25] },
+    custom: { name: 'My day', short: 'Other\u2026' }
   };
   const dayNum = (y, m, d) => Date.UTC(y, m - 1, d) / 864e5;
   const todayNum = now => { const t = new Date(now); return dayNum(t.getFullYear(), t.getMonth() + 1, t.getDate()); };
@@ -474,10 +491,11 @@
         md = [+m[2], +m[3]];
       }
       const at = yy => typeof md === 'function' ? md(yy) : md;
-      let [mm, dd] = at(y);
-      if(dayNum(y, mm, dd) >= today) return [y, mm, dd];
-      [mm, dd] = at(y + 1);
-      return [y + 1, mm, dd];
+      for(const yy of [y, y + 1]){
+        const d = at(yy);
+        if(d && dayNum(yy, d[0], d[1]) >= today) return [yy, d[0], d[1]];
+      }
+      return null; // beyond the table
     },
     sleeps(c, now){ const n = this.next(c, now); return n ? dayNum(...n) - todayNum(now) : null; },
     body: () => `
@@ -509,7 +527,7 @@
       const text = s === null ? '?' : s === 0 ? 'Today!' : s < 0 ? 'Done' : String(s);
       setText(disp, text);
       setChars(disp, Math.max(2.4, text.length));
-      const what = s === null ? 'Pick a date' : s === 0 ? `It’s ${this.name(c)}!` : s < 0 ? `${this.name(c)} has passed`
+      const what = s === null ? (c.event === 'custom' ? 'Pick a date' : `${this.name(c)}: date not listed yet`) : s === 0 ? `It’s ${this.name(c)}!` : s < 0 ? `${this.name(c)} has passed`
         : `${s === 1 ? 'sleep' : 'sleeps'} until ${this.name(c)}`;
       setText(el.querySelector('.s-what'), what);
       setText(el.querySelector('.s-when'), n && s > 0 ? ' · ' + new Date(n[0], n[1] - 1, n[2]).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) : '');
@@ -523,7 +541,8 @@
         </div>
         ${check('yearly', 'Repeat every year (birthdays, anniversaries)', c.yearly)}
         ${check('matchTheme', 'Use the holiday\u2019s theme (Christmas, Halloween, Easter\u2026)', c.matchTheme !== false)}
-        <p class="muted small">For “Another date”, the card’s name is used as the day’s name.</p>`;
+        <p class="muted small">For \u201cAnother date\u201d, the card\u2019s name is used as the day\u2019s name.</p>
+        ${Object.values(EVENTS).filter(e => e.note).map(e => `<p class="muted small">${VT.esc(e.name)}: ${VT.esc(e.note)}</p>`).join('')}`;
     },
     apply(c, fd, ctx = {}){
       const was = this.name(c), ev = fd.get('event');

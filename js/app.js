@@ -237,6 +237,8 @@
     }, T[type].defaults(), over);
     if(type === 'timer' && over.duration) Object.assign(card, { total: over.duration, remaining: over.duration });
     if(type === 'sleeps' && !over.title) card.title = T.sleeps.events[card.event].name;
+    // A holiday countdown starts in its holiday theme.
+    if(type === 'sleeps' && !over.theme && VT.holidayTheme[card.event]) card.theme = VT.holidayTheme[card.event];
     if(type !== 'stats') S.history.added++;
     const el = insert(card);
     if(total + 1 === 16 && S.settings.density === 'auto') VT.toast('That’s 16 cards. Compact density may help: it’s in the menu.');
@@ -626,14 +628,14 @@
       </div>
       <div class="pop-sec">
         <span class="field-label">Sleeps until…</span>
-        <div class="seg">${['christmas', 'halloween', 'newYear', 'easter', 'bonfire', 'custom'].map(k => `<button data-sleeps="${k}">${k === 'custom' ? 'Other…' : VT.esc(T.sleeps.events[k].name.replace(/’s Day| Sunday| Night/, ''))}</button>`).join('')}</div>
+        <div class="seg seg-wide">${['christmas', 'halloween', 'newYear', 'easter', 'diwali', 'hanukkah', 'lunarNewYear', 'eidFitr', 'bonfire', 'custom'].map(k => `<button data-sleeps="${k}">${VT.esc(T.sleeps.events[k].short)}</button>`).join('')}</div>
       </div>`;
     VT.pop.toggle(anchor, html, pop => {
       pop.querySelectorAll('[data-add]').forEach(b => b.onclick = () => { VT.pop.close(false); addCard(b.dataset.add); });
       pop.querySelectorAll('[data-sleeps]').forEach(b => b.onclick = () => {
         VT.pop.close(false);
         const ev = b.dataset.sleeps;
-        addCard('sleeps', { event: ev, title: ev === 'custom' ? 'My day' : T.sleeps.events[ev].name, ...(VT.holidayTheme[ev] ? { theme: VT.holidayTheme[ev] } : {}) });
+        addCard('sleeps', { event: ev, title: ev === 'custom' ? 'My day' : T.sleeps.events[ev].name });
         if(ev === 'custom'){ const c = S.cards[S.order[S.order.length - 1]]; if(c && c.type === 'sleeps') openSettings(c); }
       });
       pop.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
