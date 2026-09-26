@@ -138,6 +138,9 @@ input[type=range]{ accent-color: var(--accent); }
   .topbar{ padding-top: max(6px, env(safe-area-inset-top)); padding-bottom: 6px; }
 }
 
+/* Guarantee no sideways page scroll, whatever card art does. */
+main{ overflow-x: clip; }
+
 /* ---------- Empty states ---------- */
 .empty{ max-width: 520px; margin: 12vh auto 0; padding: 0 var(--pad); text-align: center; }
 .empty h1{ font-size: clamp(22px, 4vw, 30px); margin: 0 0 8px; letter-spacing: -.02em; }
@@ -191,6 +194,9 @@ input[type=range]{ accent-color: var(--accent); }
 .art{ position: absolute; inset: 0; z-index: -1; pointer-events: none; color: var(--t-accent); }
 /* Themes with corner art shrink its box with --t-art-size so it stays clear of the controls. */
 .art svg{ position: absolute; right: 0; bottom: 0; width: var(--t-art-size, 100%); height: var(--t-art-size, 100%); }
+.art svg.tr{ top: 0; bottom: auto; width: var(--t-art-top, 38%); height: var(--t-art-top, 38%); }
+.art svg.full{ width: 100%; height: 100%; }
+@container card (max-width: 420px){ .art svg.tr{ --t-art-top: 28%; } } /* the digits run nearly full width here */
 
 .card-head{ display: flex; align-items: center; gap: 2px; height: 38px; padding: 3px 4px 0; flex: none; }
 .icon-btn{
@@ -418,6 +424,7 @@ button.display:hover{ color: var(--t-accent); }
 .pop-sec > .menu-list{ margin: -6px; }
 .field-label{ display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .seg{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.seg-wide{ grid-template-columns: repeat(2, 1fr); }
 .seg button{ height: 34px; border-radius: 8px; border: 1px solid var(--ctrl-edge); background: var(--ctrl-bg); font-weight: 500; font-size: 13px; }
 .seg button[aria-pressed="true"]{ border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
 .vol-pop{ display: flex; align-items: center; gap: 8px; }

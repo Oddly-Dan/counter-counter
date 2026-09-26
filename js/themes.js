@@ -3,11 +3,15 @@
 //
 // A sound is either a synth recipe name (see audio.js) or { clip, fallback } for a CC0
 // clip in sounds/, with a synth recipe to use if the clip can't play.
-// art(card) returns SVG markup; any ids inside it must include card.id to stay unique.
+// art(card) returns SVG markup (one or more <svg>s: bottom-right by default, svgTop() for the
+// top-right corner, svgFull() for a full-width strip); ids inside must include card.id to stay unique.
 // The card sets --p (progress, 0–1) and data-state, which the CSS uses to animate the art.
 (function(VT){
   const clip = (name, fallback) => ({ clip: `sounds/${name}.mp3`, fallback });
-  const svg = (inner, fit = 'xMaxYMax meet') => `<svg viewBox="0 0 200 200" preserveAspectRatio="${fit}">${inner}</svg>`;
+  const svg = (inner, fit = 'xMaxYMax meet', cls = '') => `<svg viewBox="0 0 200 200" preserveAspectRatio="${fit}"${cls ? ` class="${cls}"` : ''}>${inner}</svg>`;
+  // Art can also sit in the top-right corner (behind the header) or run full width.
+  const svgTop = inner => svg(inner, 'xMaxYMin meet', 'tr');
+  const svgFull = (inner, fit = 'none') => svg(inner, fit, 'full');
 
   function fan(){
     let lines = '';
@@ -401,6 +405,97 @@
           <path class="bn-logs" d="M-34 4L30-12M34 4L-30-12M-20 6L0-18L20 6"/>
         </g>
         <g class="bn-sparks">${[[150, 0], [162, 1], [170, 2], [156, 3], [144, 4]].map(([x, i]) => `<circle cx="${x}" cy="120" r="1.5" style="--i:${i}"/>`).join('')}</g>`)
+    },
+
+    diwali: {
+      name: 'Diwali', group: 'holiday',
+      sounds: {
+        start: clip('hand-bell', 'bellJingle'), pause: 'tapLow', tick: 'softClick', warn: 'twinkle', alarm: clip('firecrackers', 'pop'),
+        lap: 'bellJingle', step: 'bellJingle', stepDown: 'tapLow', target: clip('hand-bell', 'eidChime'), allDone: clip('fireworks', 'launch')
+      },
+      // A row of diyas lights up with progress; the rangoli turns while running.
+      art: () => {
+        const petals = Array.from({ length: 8 }, (_, k) => `<ellipse cx="0" cy="-22" rx="9" ry="18" transform="rotate(${k * 45})"/>`).join('');
+        const dots = Array.from({ length: 16 }, (_, k) => { const a = k * Math.PI / 8; return `<circle cx="${(Math.cos(a) * 46).toFixed(1)}" cy="${(Math.sin(a) * 46).toFixed(1)}" r="3.4"/>`; }).join('');
+        return svgTop(`<g transform="translate(140 60)"><g class="dw-rangoli"><g class="dw-petals">${petals}</g><circle class="dw-core" r="10"/><g class="dw-dots">${dots}</g></g></g>`)
+          + svg(`<g class="dw-diyas">${[[62, 186], [96, 170], [130, 162], [164, 170], [192, 186]].map(([x, y], i) => `<g class="dw-diya" style="--i:${i}" transform="translate(${x} ${y})">
+            <path class="dw-flame" d="M0-6C-7-14-3-22 0-30C3-22 7-14 0-6Z"/>
+            <path class="dw-lamp" d="M-17-4Q0 16 17-4Z"/></g>`).join('')}</g>`);
+      }
+    },
+
+    hanukkah: {
+      name: 'Hanukkah', group: 'holiday',
+      sounds: {
+        start: 'twinkle', pause: 'tapLow', tick: 'softClick', warn: 'dreidel', alarm: 'hanukkahChime',
+        lap: 'dreidel', step: 'bellJingle', stepDown: 'tapLow', target: clip('hand-bell', 'hanukkahChime'), allDone: 'hanukkahChime'
+      },
+      // The menorah's candles light one by one with progress; a dreidel spins at the alarm.
+      art: () => {
+        const arms = [1, 2, 3, 4].map(k => `<path d="M140 150Q${140 - k * 13} 150 ${140 - k * 13} 118M140 150Q${140 + k * 13} 150 ${140 + k * 13} 118"/>`).join('');
+        const xs = [-52, -39, -26, -13, 13, 26, 39, 52];
+        const candles = xs.map((dx, i) => `<g class="hk-candle" style="--i:${i}" transform="translate(${140 + dx} 118)"><rect x="-2.5" y="-14" width="5" height="14"/><path class="hk-flame" d="M0-15C-3.5-20-1.2-24 0-29C1.2-24 3.5-20 0-15Z"/></g>`).join('');
+        return svg(`<g class="hk-menorah"><g class="hk-arms">${arms}<path d="M140 118V184M116 188H164"/></g>${candles}
+            <g class="hk-shamash" transform="translate(140 104)"><rect x="-3" y="-16" width="6" height="16"/><path class="hk-flame" d="M0-17C-3.5-22-1.2-26 0-31C1.2-26 3.5-22 0-17Z"/></g></g>`)
+          + svgTop(`<g transform="translate(150 60)"><g class="hk-dreidel"><path d="M-20-28H20V8L0 32-20 8Z"/><rect x="-4" y="-44" width="8" height="16"/></g></g>`);
+      }
+    },
+
+    lunar: {
+      name: 'Lunar New Year', group: 'holiday',
+      sounds: {
+        start: clip('gong', 'gongSoft'), pause: 'woodLow', tick: 'woodBlock', warn: 'gongSoft', alarm: clip('firecrackers', 'pop'),
+        lap: 'woodBlock', step: 'woodBlock', stepDown: 'woodLow', target: clip('gong', 'gongSoft'), allDone: clip('firecrackers', 'pop')
+      },
+      // Lanterns sway while running; plum blossom below; sparks at the alarm.
+      art: () => {
+        const lantern = (x, y, i, sc) => `<g transform="translate(${x} 0)"><g class="ln-lantern" style="--i:${i}">
+          <line class="ln-string" x1="0" y1="0" x2="0" y2="${y - 19 * sc}"/>
+          <g transform="translate(0 ${y}) scale(${sc})"><rect class="ln-cap" x="-11" y="-23" width="22" height="6" rx="2"/><ellipse class="ln-body" rx="24" ry="19"/>
+            <path class="ln-rib" d="M0-19V19M-12-17Q-19 0-12 17M12-17Q19 0 12 17"/><rect class="ln-cap" x="-11" y="17" width="22" height="6" rx="2"/>
+            <path class="ln-tassel" d="M0 23V40M-4 40H4"/></g></g></g>`;
+        return svgTop(`${lantern(126, 46, 0, .9)}${lantern(174, 34, 1, .7)}
+            <g class="ln-sparks">${Array.from({ length: 10 }, (_, k) => `<circle style="--i:${k}" cx="${100 + (k * 23) % 96}" cy="${70 + (k * 31) % 90}" r="3"/>`).join('')}</g>`)
+          + svg(`<g class="ln-branch"><path d="M200 196Q160 190 140 170T96 150"/>${[[182, 186], [158, 180], [140, 166], [118, 156], [100, 150]].map(([x, y]) => `<circle class="ln-blossom" cx="${x}" cy="${y - 7}" r="6"/>`).join('')}</g>`);
+      }
+    },
+
+    eid: {
+      name: 'Eid', group: 'holiday',
+      sounds: {
+        start: 'twinkle', pause: 'tapLow', tick: 'softClick', warn: 'twinkle', alarm: 'eidChime',
+        lap: 'bellJingle', step: 'bellJingle', stepDown: 'tapLow', target: clip('hand-bell', 'eidChime'), allDone: 'eidChime'
+      },
+      // Crescent moon and star up top; a lantern glows brighter with progress.
+      art: card => {
+        const fanous = (x, len, i, sc) => `<g transform="translate(${x} 0)"><g class="ed-lantern" style="--i:${i}">
+          <line class="ed-chain" x1="0" y1="${200 - len - 60 * sc}" x2="0" y2="${200 - 60 * sc}"/>
+          <g transform="translate(0 ${200 - 60 * sc}) scale(${sc})"><path class="ed-top" d="M-11 12L0 0 11 12Z"/><path class="ed-glass" d="M-17 12H17L13 48H-13Z"/>
+            <path class="ed-frame" d="M-17 12H17L13 48H-13ZM0 12V48M-15 30H15"/><path class="ed-top" d="M-13 48H13L6 58H-6Z"/></g></g></g>`;
+        return svgTop(`
+            <defs><mask id="eMoon-${card.id}"><rect width="200" height="200" fill="#fff"/><circle cx="168" cy="46" r="36" fill="#000"/></mask></defs>
+            <g class="ed-stars">${[[70, 30], [96, 70], [60, 100], [120, 16]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="2.4" style="--i:${i}"/>`).join('')}</g>
+            <circle class="ed-moon" cx="150" cy="60" r="44" mask="url(#eMoon-${card.id})"/>
+            <path class="ed-star" d="M178 104l3.6 7.5 8.1.9-6 5.6 1.7 8-7.4-4.1-7.4 4.1 1.7-8-6-5.6 8.1-.9Z"/>`)
+          + svg(`${fanous(176, 26, 0, 1)}${fanous(134, 14, 1, .75)}`);
+      }
+    },
+
+    summer: {
+      name: 'Summer Holidays', group: 'holiday',
+      sounds: {
+        start: clip('beach-waves', 'drip'), pause: 'drip', tick: 'softClick', warn: clip('gulls', 'twinkle'), alarm: 'greensleeves',
+        lap: 'pop', step: 'pop', stepDown: 'drip', target: clip('gulls', 'success'), allDone: 'greensleeves'
+      },
+      // The sun turns, waves roll while running, and the ice cream melts as time runs out.
+      art: () => svgTop(`<g transform="translate(150 50)"><g class="sm-sun"><circle r="24"/>${Array.from({ length: 12 }, (_, k) => `<line x1="0" y1="-32" x2="0" y2="-44" transform="rotate(${k * 30})"/>`).join('')}</g></g>
+          <path class="sm-gull" d="M0 0q9-9 18 0q9-9 18 0"/>`)
+        + svgFull(`<g class="sm-waves"><path class="sm-wave a" d="M-40 186q20-8 40 0t40 0t40 0t40 0t40 0t40 0t40 0V200H-40Z"/>
+            <path class="sm-wave b" d="M-60 192q20-6 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0V200H-60Z"/></g>`)
+        + svg(`<g transform="translate(170 140)">
+            <path class="sm-cone" d="M-16 0L0 46 16 0Z"/><path class="sm-waffle" d="M-12 5L5 35M-3 3L9 21M12 5L-5 35"/>
+            <g class="sm-scoop"><circle cx="0" cy="-10" r="17"/><path class="sm-drip" d="M-10-2Q-10 10-6 13Q-2 10-4-2Z"/></g>
+          </g>`)
     }
   };
 
@@ -408,7 +503,8 @@
 
   // Holiday that each Sleeps preset pairs with.
   VT.holidayTheme = { christmas: 'christmas', christmasEve: 'christmas', halloween: 'halloween', easter: 'easter',
-    valentines: 'valentine', newYear: 'newyear', bonfire: 'bonfire' };
+    valentines: 'valentine', newYear: 'newyear', bonfire: 'bonfire', diwali: 'diwali', hanukkah: 'hanukkah',
+    lunarNewYear: 'lunar', eidFitr: 'eid', eidAdha: 'eid', midsummer: 'summer' };
 
   // <option>s for a theme <select>, grouped into everyday themes and holidays.
   VT.themeOptions = function(selected){

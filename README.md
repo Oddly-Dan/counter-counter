@@ -6,7 +6,7 @@ A page of themed cards: timers, stopwatches, counters, Voice Tally counters, Sle
 
 Open `index.html` in a browser, or serve the folder with GitHub Pages. There is no build step and nothing to install.
 
-- **Add** (top bar): Timer, Stopwatch, Counter, Voice Tally, Sleeps, Card Stats, a timer preset, or a Sleeps countdown to Christmas, Halloween, New Year, Easter, Bonfire Night or a date of your own.
+- **Add** (top bar, or the buttons on the empty start page): Timer, Stopwatch, Counter, Voice Tally, Sleeps, Card Stats, a timer preset, or a Sleeps countdown to Christmas, Halloween, New Year, Easter, Diwali, Hanukkah, Lunar New Year, Eid, Bonfire Night or a date of your own.
 - **Reorder:** drag the dotted handle. With the keyboard, focus the handle, press Space, move it with the arrow keys, then press Space to drop it or Escape to cancel.
 - **Resize:** drag the corner grip. Sizes snap to grid spans: S 1×1, M 2×1, L 2×2, XL 3×2, Tall 1×2, Wide 3×1. You can also pick a size from the card's ⋯ menu.
 - **Sort:** Manual, Newest, Oldest, Least time remaining, Most time elapsed, Needs attention, Name, Type, Theme, Counter value. A sort is applied once. Turn on **Keep sorted** to re-sort every 5 seconds. Dragging a card switches back to Manual.
@@ -24,7 +24,7 @@ Everything is saved in `localStorage`. After a reload, timers carry on from thei
 | Stopwatch | Start, pause, laps (the latest 3 on the card, all of them in Settings) |
 | Counter | Plus and minus buttons (hold to repeat), step size, optional target with a progress bar, optional negative numbers |
 | Voice Tally | A copy of [Voice Tally](https://github.com/Oddly-Dan/tally)'s counting logic: speaks every number from start to target. Only one Voice Tally card speaks at a time |
-| Sleeps | Nights until Christmas, Christmas Eve, New Year, Valentine's Day, Easter (worked out for each year), Halloween, Bonfire Night, or any date, one-off or yearly. Counts calendar days, so Christmas Eve is 1 sleep. Celebrates on the day |
+| Sleeps | Nights until New Year, Lunar New Year, Valentine's Day, Eid al-Fitr, Easter, Eid al-Adha, Midsummer, Halloween, Diwali, Bonfire Night, Hanukkah, Christmas Eve, Christmas, or any date, one-off or yearly. Easter is calculated. Diwali, Hanukkah, Lunar New Year and Eid come from a table of dates to 2031 (timeanddate.com, UK listings; Eid dates depend on the moon sighting). Counts calendar days, so Christmas Eve is 1 sleep. Celebrates on the day |
 | Card Stats | Live counts of cards, running, paused, idle, ended and ringing, a breakdown by type, and all-time added, removed and completed totals. It can chime when everything running has ended |
 
 ## Sizes and limits
@@ -41,7 +41,7 @@ Density can be set to Auto, Comfy (always Large) or Compact (always Mini). The l
 
 ## Themes
 
-There are 16 everyday themes and 6 holiday themes, each with a light and a dark variant that follows the system setting.
+There are 16 everyday themes and 11 holiday themes, each with a light and a dark variant that follows the system setting.
 
 | Theme | Look | Moves | Sounds |
 |---|---|---|---|
@@ -70,6 +70,11 @@ There are 16 everyday themes and 6 holiday themes, each with a light and a dark 
 | Valentine's Day | Pinks and reds | The heart fills with progress, hearts float up | Kiss, heartbeat, harp |
 | New Year | Midnight and gold | Champagne bubbles, fireworks | Glasses clink, cork pop, fireworks, cheering |
 | Bonfire Night | Smoky night sky | Sparkler trail, bonfire, rockets | Sparkler, firecracker, fireworks, whoosh |
+| Diwali | Saffron and magenta | Diyas light up with progress, the rangoli turns | Hand bell, firecrackers, fireworks |
+| Hanukkah | Blue, white and silver | Menorah candles light with progress, a dreidel spins | Chimes, dreidel spin, hand bell |
+| Lunar New Year | Red and gold | Lanterns sway, plum blossom, sparks | Gong, wood block, firecrackers |
+| Eid | Night blue and gold | Crescent moon and star, lanterns glow brighter | Chimes, hand bell |
+| Summer Holidays | Sea, sand and sun | The sun turns, waves roll, the ice cream melts | Waves, gulls, an ice-cream-van Greensleeves |
 
 A Sleeps card for a holiday picks up the matching theme when you add it from the Add menu, and when you change its event in Settings. Untick "Use the holiday's theme" to keep your own.
 

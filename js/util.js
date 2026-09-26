@@ -64,7 +64,8 @@ window.VT = window.VT || {};
 
   // FLIP: record positions, mutate the DOM, then animate each child from its old spot.
   VT.flip = function(container, mutate){
-    if(VT.reducedMotion()){ mutate(); return; }
+    // Skip when motion is reduced, or when the tab is hidden and animations can't run.
+    if(VT.reducedMotion() || document.hidden){ mutate(); return; }
     const first = new Map([...container.children].map(k => [k, k.getBoundingClientRect()]));
     mutate();
     for(const k of container.children){

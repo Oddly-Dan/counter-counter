@@ -178,6 +178,20 @@
       src.connect(f).connect(v).connect(o); src.start(t); src.stop(t + 0.75);
     },
 
+    // Hanukkah
+    dreidel: (o, t) => [0, 0.05, 0.1, 0.16, 0.23, 0.31, 0.4, 0.5].forEach(dt => noise(o, t + dt, { d: 0.015, g: 0.35, freq: 2200, q: 3 })),
+    hanukkahChime: (o, t) => [784, 988, 1175, 1568, 1175, 1568].forEach((f, i) => { tone(o, t + i * 0.16, { f, d: 0.9, g: 0.14, a: 0.002 }); tone(o, t + i * 0.16, { f: f * 2.76, d: 0.3, g: 0.03, a: 0.002 }); }),
+
+    // Lunar New Year
+    gongSoft: (o, t) => [[110, 0.3], [164, 0.12], [233, 0.08], [311, 0.05]].forEach(([f, g]) => sweep(o, t, { pts: [[0, f], [2, f * 0.98]], g, d: 2.2, a: 0.02 })),
+
+    // Eid
+    eidChime: (o, t) => [659, 880, 1109, 1319, 1109, 1760].forEach((f, i) => tone(o, t + i * 0.14, { f, d: 1.1, type: 'triangle', g: 0.13, a: 0.003 })),
+
+    // Summer: the ice-cream van's Greensleeves (16th century, public domain)
+    greensleeves: (o, t) => [[440, 0.2], [523, 0.4], [587, 0.2], [659, 0.3], [698, 0.1], [659, 0.2], [587, 0.4], [494, 0.2], [392, 0.3], [440, 0.1]]
+      .reduce((at, [f, d]) => { tone(o, t + at, { f, d: d + 0.08, type: 'triangle', g: 0.18, a: 0.004 }); tone(o, t + at, { f: f * 2, d: d * 0.6, type: 'square', g: 0.025, a: 0.004 }); return at + d; }, 0),
+
     // Steampunk
     gearTick: (o, t) => { noise(o, t, { d: 0.01, g: 0.45, freq: 3600, q: 4 }); tone(o, t, { f: 1200, d: 0.015, g: 0.08, a: 0.001 }); },
     ratchet: (o, t) => [0, 0.025, 0.05, 0.075, 0.1].forEach(dt => noise(o, t + dt, { d: 0.01, g: 0.4, freq: 3000, q: 4 }))

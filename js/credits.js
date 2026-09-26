@@ -37,11 +37,16 @@
       sound('firecracker', 'Firecracker with wick #4', 'firecracker-with-wick-4-s1140'),
       sound('sparkler', 'Sparkling Candle #1', 'sparkling-candle-1-s1278'),
       sound('champagne-cork', 'Champagne cork #2', 'champagne-cork-2-s0648'),
-      sound('glasses-clink', 'Cheers, Champagne Flute #1', 'cheers-champagne-flute-1-s1335')
+      sound('glasses-clink', 'Cheers, Champagne Flute #1', 'cheers-champagne-flute-1-s1335'),
+      sound('gong', 'Gong, sweet', 'gong-sweet-s1482'),
+      sound('hand-bell', 'Small Bell #1', 'small-bell-1-s0292'),
+      sound('gulls', 'Gulls on the Harbor', 'gulls-on-the-harbor-s2573'),
+      sound('beach-waves', 'Beach: Small Waves', 'beach-small-waves-s0265'),
+      sound('firecrackers', 'Firecrackers (layered into a string)', 'firecrackers-s0919')
     ],
     fonts: ['Inter', 'Playfair Display', 'Space Mono', 'Fredoka', 'Press Start 2P', 'Orbitron', 'Nunito',
       'Cormorant Garamond', 'Quicksand', 'Bitter', 'VT323', 'Bebas Neue', 'Cinzel',
-      'Mountains of Christmas', 'Creepster', 'Chewy', 'Pacifico', 'Limelight', 'Bungee']
+      'Mountains of Christmas', 'Creepster', 'Chewy', 'Pacifico', 'Limelight', 'Bungee', 'Yatra One', 'Frank Ruhl Libre', 'Amiri']
   };
 
   // Which themes use a clip, e.g. { 'dog-bark': ['A Dog’s Life'] }.
