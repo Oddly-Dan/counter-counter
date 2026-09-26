@@ -305,6 +305,7 @@ button.display:hover{ color: var(--t-accent); }
 .card.resizing{ outline: 2px dashed var(--t-accent); outline-offset: 2px; }
 
 /* Counter */
+[data-type="counter"] .card-body{ --dcap: calc(100cqb - 150px); }
 .counter-row{ display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
 .counter-row .display{ flex: 1; min-width: 0; text-align: center; font-size: clamp(22px, min(calc((100cqi - 124px) * 1.5 / var(--chars, 2) * var(--t-fit, 1)), 40cqb, var(--dcap)), 220px); }
 [data-type="counter"][data-state="finished"] .display{ color: var(--t-accent); }
@@ -342,6 +343,7 @@ button.display:hover{ color: var(--t-accent); }
   .vol-btn{ display: none; }
   .card-body{ --dcap: calc(100cqb - 166px); } /* the volume row takes 36px */
   [data-type="sleeps"] .card-body{ --dcap: calc(100cqb - 136px); }
+  [data-type="counter"] .card-body{ --dcap: calc(100cqb - 190px); }
 }
 @container card (max-width: 259px), (max-height: 239px){ .card-foot{ display: none; } }
 @container card (max-width: 300px){ .cbtn .lbl{ display: none; } .cbtn{ padding: 0 12px; } }
@@ -363,7 +365,7 @@ button.display:hover{ color: var(--t-accent); }
 }
 @container card (max-width: 189px), (max-height: 159px){
   .controls .secondary{ display: none; }
-  .art{ opacity: .5; }
+  .art{ opacity: .35; }
 }
 @container card (max-height: 150px){
   .stat:nth-child(n+4){ display: none; }

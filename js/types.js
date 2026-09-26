@@ -522,15 +522,19 @@
           ${field('Date', `<input type="date" name="date" value="${VT.esc(c.date || '')}">`)}
         </div>
         ${check('yearly', 'Repeat every year (birthdays, anniversaries)', c.yearly)}
+        ${check('matchTheme', 'Use the holiday\u2019s theme (Christmas, Halloween, Easter\u2026)', c.matchTheme !== false)}
         <p class="muted small">For “Another date”, the card’s name is used as the day’s name.</p>`;
     },
-    apply(c, fd){
+    apply(c, fd, ctx = {}){
       const was = this.name(c), ev = fd.get('event');
       c.event = EVENTS[ev] ? ev : 'christmas';
       c.date = fd.get('date') || '';
       c.yearly = fd.has('yearly');
       // Keep the title in step with the event unless the user renamed it.
       if(c.event !== 'custom' && (c.title === was || Object.values(EVENTS).some(e => e.name === c.title))) c.title = EVENTS[c.event].name;
+      // Pair with the holiday theme, unless the theme was changed in this same dialog.
+      c.matchTheme = fd.has('matchTheme');
+      if(c.matchTheme && VT.holidayTheme[c.event] && c.theme === ctx.prevTheme) c.theme = VT.holidayTheme[c.event];
       c.status = 'idle';
       c.celebrated = null;
     }

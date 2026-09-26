@@ -288,8 +288,132 @@
           <line class="sk-needle" x1="0" y1="0" x2="0" y2="-22"/><circle class="sk-hub" r="3"/>
         </g>
         <g class="sk-steam"><circle cx="118" cy="140" r="10"/><circle cx="104" cy="126" r="14"/><circle cx="90" cy="108" r="18"/></g>`)
+    },
+
+    // ---------- Holidays ----------
+    christmas: {
+      name: 'Christmas', group: 'holiday',
+      sounds: {
+        start: 'bellJingle', pause: 'tapLow', tick: 'softClick', warn: clip('ho-ho-ho', 'twinkle'), alarm: clip('sleigh-bells', 'jingleTune'),
+        lap: 'bellJingle', step: 'bellJingle', stepDown: 'tapLow', target: clip('ho-ho-ho', 'jingleTune'), allDone: 'jingleTune'
+      },
+      // Fairy lights twinkle, snow falls while running, and the present opens at the alarm.
+      art: () => svg(`
+        <path class="x-wire" d="M0 10Q25 26 50 12T100 12T150 12T200 12"/>
+        <g class="x-bulbs">${[[12, 16], [38, 18], [62, 14], [88, 16], [112, 15], [138, 17], [162, 14], [188, 15]].map(([x, y], i) => `<circle cx="${x}" cy="${y + 5}" r="4" style="--i:${i}"/>`).join('')}</g>
+        <g class="x-snow">${Array.from({ length: 14 }, (_, i) => `<circle cx="${(i * 37) % 200}" cy="${-10 - (i * 23) % 60}" r="${1.5 + i % 3}" style="--i:${i}"/>`).join('')}</g>
+        <g class="x-gift" transform="translate(150 150)">
+          <rect class="x-box" x="-26" y="0" width="52" height="40" rx="3"/>
+          <rect class="x-ribbon" x="-5" y="0" width="10" height="40"/>
+          <g class="x-lid"><rect class="x-box" x="-30" y="-12" width="60" height="13" rx="3"/><rect class="x-ribbon" x="-5" y="-12" width="10" height="13"/>
+            <path class="x-bow" d="M0-12C-14-26-22-12-2-12ZM0-12C14-26 22-12 2-12Z"/></g>
+        </g>`, 'xMidYMid slice')
+    },
+
+    halloween: {
+      name: 'Halloween', group: 'holiday',
+      sounds: {
+        start: clip('door-creak', 'boneLow'), pause: 'boneLow', tick: 'boneClick', warn: clip('owl', 'spookyOrgan'), alarm: clip('witch-cackle', 'spookyOrgan'),
+        lap: 'boneClick', step: 'boneClick', stepDown: 'boneLow', target: 'spookyOrgan', allDone: clip('witch-cackle', 'spookyOrgan')
+      },
+      // The jack-o'-lantern flickers while running; bats scatter at the alarm.
+      art: () => svg(`
+        <circle class="h-moon" cx="160" cy="44" r="26"/>
+        <g class="h-bats">${[[30, 60, 0], [70, 40, 1], [110, 70, 2]].map(([x, y, i]) => `<path style="--i:${i}" transform="translate(${x} ${y})" d="M0 0q6-8 10-2q2-4 4 0q2-4 4 0q4-6 10 2q-6-2-9 3q-2-3-5 0q-3-3-5 0q-3-5-9-3z"/>`).join('')}</g>
+        <g class="h-pumpkin" transform="translate(150 160)">
+          <ellipse class="h-lobe" cx="-18" cy="0" rx="18" ry="24"/><ellipse class="h-lobe" cx="18" cy="0" rx="18" ry="24"/><ellipse class="h-lobe mid" cx="0" cy="0" rx="20" ry="26"/>
+          <path class="h-stem" d="M-3-24q0-10 8-14l3 3q-6 4-5 11z"/>
+          <path class="h-face" d="M-17-8l7-9 7 9zM3-8l7-9 7 9zM-18 6q4 2 6 0l3 4 3-4 3 4 3-4 3 4 3-4q2 2 6 0q-6 12-18 12t-18-12z"/>
+        </g>`)
+    },
+
+    easter: {
+      name: 'Easter', group: 'holiday',
+      sounds: {
+        start: 'boing', pause: 'eggTap', tick: 'eggTap', warn: clip('chick-chirp', 'twinkle'), alarm: clip('chick-chirp', 'success'),
+        lap: 'eggTap', step: 'eggTap', stepDown: 'eggTap', target: clip('chick-chirp', 'success'), allDone: 'success'
+      },
+      // The egg cracks as progress fills, then a chick pops out.
+      art: () => svg(`
+        <g class="e-grass"><path d="M90 200q4-18 8 0q4-22 8 0q4-16 8 0q4-20 8 0q4-18 8 0q4-24 8 0q4-16 8 0q4-20 8 0q4-18 8 0q4-22 8 0q4-18 8 0z"/></g>
+        <g transform="translate(150 150)">
+          <g class="e-chick"><circle class="e-chick-body" cx="0" cy="0" r="17"/><circle class="e-eye" cx="-6" cy="-4" r="2"/><circle class="e-eye" cx="6" cy="-4" r="2"/><path class="e-beak" d="M-4 2h8l-4 5z"/></g>
+          <path class="e-bottom" d="M-30 0C-30 30-16 44 0 44S30 30 30 0L22-6 14 2 6-6-2 2-10-6-18 2-26-6Z"/>
+          <g class="e-top"><path class="e-shell" d="M-30 0C-30-32-16-48 0-48S30-32 30 0L22-6 14 2 6-6-2 2-10-6-18 2-26-6Z"/>
+            <path class="e-stripe" d="M-27-18q7 6 14 0t14 0t14 0t12 0"/></g>
+          <path class="e-crack" d="M-26-6L-18 2-10-6-2 2 6-6 14 2 22-6 30 0"/>
+        </g>`)
+    },
+
+    valentine: {
+      name: 'Valentine’s Day', group: 'holiday',
+      sounds: {
+        start: 'twinkle', pause: 'heartBeat', tick: 'softClick', warn: 'heartBeat', alarm: 'loveHarp',
+        lap: clip('kiss', 'twinkle'), step: clip('kiss', 'twinkle'), stepDown: 'heartBeat', target: clip('kiss', 'loveHarp'), allDone: 'loveHarp'
+      },
+      // The heart fills with progress; little hearts float up.
+      art: card => {
+        const heart = 'M0 14C-26-4-22-30 0-18C22-30 26-4 0 14Z';
+        return svg(`
+          <defs><clipPath id="vHeart-${card.id}"><path d="${heart}" transform="translate(150 140) scale(1.9)"/></clipPath></defs>
+          <g class="v-floaters">${[[40, 0], [70, 1], [100, 2], [124, 3], [20, 4]].map(([x, i]) => `<path style="--i:${i}" transform="translate(${x} 200) scale(.35)" d="${heart}"/>`).join('')}</g>
+          <path class="v-heart-bg" d="${heart}" transform="translate(150 140) scale(1.9)"/>
+          <g clip-path="url(#vHeart-${card.id})"><rect class="v-fill" x="90" y="100" width="120" height="70"/></g>
+          <path class="v-heart" d="${heart}" transform="translate(150 140) scale(1.9)"/>`);
+      }
+    },
+
+    newyear: {
+      name: 'New Year', group: 'holiday',
+      sounds: {
+        start: clip('glasses-clink', 'glassClink'), pause: 'glassLow', tick: 'watchTick', warn: 'countdownBeeps', alarm: clip('fireworks', 'launch'),
+        lap: clip('glasses-clink', 'glassClink'), step: 'pop', stepDown: 'glassLow', target: clip('champagne-cork', 'pop'), allDone: clip('crowd-cheer', 'success')
+      },
+      // Bubbles rise in the glass while running; fireworks burst at the alarm.
+      art: () => {
+        const burst = (x, y, i, n = 12) => `<g class="ny-burst" style="--i:${i}" transform="translate(${x} ${y})">${Array.from({ length: n }, (_, k) => `<line x1="0" y1="6" x2="0" y2="22" transform="rotate(${k * 360 / n})"/>`).join('')}</g>`;
+        return svg(`
+          <g class="ny-stars">${[[20, 20], [60, 50], [110, 16], [180, 30], [140, 70], [30, 110]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="1.4" style="--i:${i}"/>`).join('')}</g>
+          ${burst(50, 50, 0)}${burst(120, 36, 1, 14)}${burst(170, 80, 2, 10)}
+          <g transform="translate(180 146) scale(.62)">
+            <path class="ny-glass" d="M-16 0H16L4 30V56H14V60H-14V56H-4V30Z"/>
+            <path class="ny-wine" d="M-13 6H13L3 26H-3Z"/>
+            <g class="ny-bubbles">${[[-4, 0], [2, 1], [-1, 2], [5, 3]].map(([x, i]) => `<circle cx="${x}" cy="24" r="1.4" style="--i:${i}"/>`).join('')}</g>
+          </g>`, 'xMidYMid slice');
+      }
+    },
+
+    bonfire: {
+      name: 'Bonfire Night', group: 'holiday',
+      sounds: {
+        start: clip('sparkler', 'fizz'), pause: clip('twig-snap', 'softClick'), tick: 'softClick', warn: 'whoosh', alarm: clip('fireworks', 'launch'),
+        lap: 'whoosh', step: clip('firecracker', 'pop'), stepDown: clip('twig-snap', 'softClick'), target: clip('firecracker', 'pop'), allDone: clip('fireworks', 'launch')
+      },
+      // A sparkler writes a trail with progress; rockets go up at the alarm.
+      art: () => svg(`
+        <path class="bn-trail" d="M20 150C40 110 70 170 90 120S140 80 150 110"/>
+        <g class="bn-rockets">${[[40, 0], [90, 1], [140, 2]].map(([x, i]) => `<g style="--i:${i}" transform="translate(${x} 200)"><line x1="0" y1="0" x2="0" y2="-14"/><circle cx="0" cy="-16" r="2.5"/></g>`).join('')}</g>
+        <g transform="translate(176 196) scale(.7)">
+          <g class="bn-fire">
+            <path class="bn-flame o" d="M0 0C-24-20-12-48 0-78C12-48 24-20 0 0Z"/>
+            <path class="bn-flame i" d="M0 0C-12-12-6-30 0-46C6-30 12-12 0 0Z"/>
+          </g>
+          <path class="bn-logs" d="M-34 4L30-12M34 4L-30-12M-20 6L0-18L20 6"/>
+        </g>
+        <g class="bn-sparks">${[[150, 0], [162, 1], [170, 2], [156, 3], [144, 4]].map(([x, i]) => `<circle cx="${x}" cy="120" r="1.5" style="--i:${i}"/>`).join('')}</g>`)
     }
   };
 
   VT.themeOrder = Object.keys(VT.themes);
+
+  // Holiday that each Sleeps preset pairs with.
+  VT.holidayTheme = { christmas: 'christmas', christmasEve: 'christmas', halloween: 'halloween', easter: 'easter',
+    valentines: 'valentine', newYear: 'newyear', bonfire: 'bonfire' };
+
+  // <option>s for a theme <select>, grouped into everyday themes and holidays.
+  VT.themeOptions = function(selected){
+    const opt = id => `<option value="${id}"${id === selected ? ' selected' : ''}>${VT.esc(VT.themes[id].name)}</option>`;
+    const everyday = VT.themeOrder.filter(id => !VT.themes[id].group), holiday = VT.themeOrder.filter(id => VT.themes[id].group === 'holiday');
+    return `<optgroup label="Everyday">${everyday.map(opt).join('')}</optgroup><optgroup label="Holidays">${holiday.map(opt).join('')}</optgroup>`;
+  };
 })(window.VT);

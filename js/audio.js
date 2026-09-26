@@ -152,6 +152,32 @@
     jingle: (o, t) => [1319, 1568, 2093, 1568, 2637, 2093].forEach((f, i) => tone(o, t + i * 0.1, { f, d: 0.25, type: 'triangle', g: 0.18 })),
     crunch: (o, t) => [0, 0.03, 0.07].forEach(dt => noise(o, t + dt, { d: 0.05, g: 0.35, freq: 1300, q: 0.7 })),
 
+    // Christmas: the Jingle Bells chorus opening (public domain, 1857)
+    jingleTune: (o, t) => [[659, 0.18], [659, 0.18], [659, 0.36], [659, 0.18], [659, 0.18], [659, 0.36], [659, 0.18], [784, 0.18], [523, 0.27], [587, 0.09], [659, 0.5]]
+      .reduce((at, [f, d]) => { tone(o, t + at, { f, d: d + 0.2, type: 'triangle', g: 0.2 }); tone(o, t + at, { f: f * 3, d: 0.12, g: 0.03 }); return at + d; }, 0),
+
+    // Halloween
+    spookyOrgan: (o, t) => [147, 175, 208, 294].forEach(f => sweep(o, t, { pts: [[0, f], [1.4, f * 0.97]], type: 'sawtooth', g: 0.07, d: 1.6, a: 0.35, filter: 900 })),
+    boneClick: (o, t) => { tone(o, t, { f: 1250, d: 0.06, g: 0.25, a: 0.001 }); tone(o, t, { f: 3100, d: 0.03, g: 0.08, a: 0.001 }); },
+    boneLow: (o, t) => { tone(o, t, { f: 830, d: 0.07, g: 0.25, a: 0.001 }); tone(o, t, { f: 2100, d: 0.03, g: 0.08, a: 0.001 }); },
+
+    // Easter
+    eggTap: (o, t) => { tone(o, t, { f: 1500, d: 0.04, g: 0.25, a: 0.001 }); noise(o, t, { d: 0.015, g: 0.2, freq: 3500, q: 2 }); },
+
+    // Valentine's Day
+    loveHarp: (o, t) => [523, 659, 784, 988, 1175, 1319, 1568].forEach((f, i) => tone(o, t + i * 0.08, { f, d: 1, type: 'triangle', g: 0.14, a: 0.003 })),
+    heartBeat: (o, t) => { tone(o, t, { f: 75, f2: 45, d: 0.14, g: 0.6 }); tone(o, t + 0.22, { f: 65, f2: 40, d: 0.14, g: 0.45 }); },
+    twinkle: (o, t) => { tone(o, t, { f: 1568, d: 0.45, g: 0.12 }); tone(o, t + 0.08, { f: 2093, d: 0.5, g: 0.1 }); },
+
+    // Bonfire Night
+    whoosh: (o, t) => {
+      const src = noiseSource(), f = ctx.createBiquadFilter(), v = ctx.createGain();
+      src.loop = true;
+      f.type = 'bandpass'; f.Q.value = 2; f.frequency.setValueAtTime(400, t); f.frequency.exponentialRampToValueAtTime(3500, t + 0.6);
+      v.gain.setValueAtTime(0.0001, t); v.gain.exponentialRampToValueAtTime(0.5, t + 0.3); v.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
+      src.connect(f).connect(v).connect(o); src.start(t); src.stop(t + 0.75);
+    },
+
     // Steampunk
     gearTick: (o, t) => { noise(o, t, { d: 0.01, g: 0.45, freq: 3600, q: 4 }); tone(o, t, { f: 1200, d: 0.015, g: 0.08, a: 0.001 }); },
     ratchet: (o, t) => [0, 0.025, 0.05, 0.075, 0.1].forEach(dt => noise(o, t + dt, { d: 0.01, g: 0.4, freq: 3000, q: 4 }))

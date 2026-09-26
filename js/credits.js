@@ -26,10 +26,22 @@
       sound('steam-whistle', 'Whistling train #1', 'whistling-train-1-s0225'),
       sound('steam-hiss', 'Hiss of steam train #7', 'hiss-of-steam-train-7-s3019'),
       sound('party-horn', 'Party horn #2', 'party-horn-2-s1554'),
-      sound('space-beep', 'Aerospace communication beep #1', 'aerospace-beep-1-s2380')
+      sound('space-beep', 'Aerospace communication beep #1', 'aerospace-beep-1-s2380'),
+      sound('sleigh-bells', 'Bells of Santa Claus #1', 'bells-of-santa-claus-s0585'),
+      sound('ho-ho-ho', 'Santa Claus, Oh Oh Oh #1', 'santa-claus-oh-oh-oh-1-s2074'),
+      sound('door-creak', 'Creaking Door #1', 'creaking-door-s0302'),
+      sound('witch-cackle', 'Strident Laughter', 'strident-laughter-s0489'),
+      sound('chick-chirp', 'Chick that chirp', 'chick-that-chirp-s0672'),
+      sound('kiss', 'Kiss #1', 'kiss-1-s2196'),
+      sound('fireworks', 'Fireworks far Away', 'fireworks-far-away-s1050'),
+      sound('firecracker', 'Firecracker with wick #4', 'firecracker-with-wick-4-s1140'),
+      sound('sparkler', 'Sparkling Candle #1', 'sparkling-candle-1-s1278'),
+      sound('champagne-cork', 'Champagne cork #2', 'champagne-cork-2-s0648'),
+      sound('glasses-clink', 'Cheers, Champagne Flute #1', 'cheers-champagne-flute-1-s1335')
     ],
     fonts: ['Inter', 'Playfair Display', 'Space Mono', 'Fredoka', 'Press Start 2P', 'Orbitron', 'Nunito',
-      'Cormorant Garamond', 'Quicksand', 'Bitter', 'VT323', 'Bebas Neue', 'Cinzel']
+      'Cormorant Garamond', 'Quicksand', 'Bitter', 'VT323', 'Bebas Neue', 'Cinzel',
+      'Mountains of Christmas', 'Creepster', 'Chewy', 'Pacifico', 'Limelight', 'Bungee']
   };
 
   // Which themes use a clip, e.g. { 'dog-bark': ['A Dog’s Life'] }.

@@ -542,6 +542,226 @@
 @media (prefers-color-scheme: dark){ .theme-steampunk .sk-gauge{ fill: #2a1c12; } }
 @keyframes puff{ 0%{ opacity: .7; transform: translate(0, 0) scale(.6); } 100%{ opacity: 0; transform: translate(-20px, -30px) scale(1.4); } }
 
+/* =================== Holiday themes =================== */
+
+/* ---------- Christmas: red, green and gold; fairy lights, snow, a present ---------- */
+.theme-christmas{
+  --t-art-size: 100%;
+  --t-bg: linear-gradient(180deg, #fffdf8 0%, #f6efe2 100%); --t-bg-solid: #fffdf8;
+  --t-fg: #1b3a28; --t-muted: #5f7a66; --t-edge: #e7d9bf; --t-hover: #f3ead8; --t-track: #eadfc9;
+  --t-accent: #c8102e; --t-on-accent: #fff; --t-warn: #b8860b; --t-alarm: #c8102e;
+  --t-btn-bg: #f3ead8; --t-btn-fg: #1b3a28; --t-btn-radius: 12px; --t-radius: 18px;
+  --t-shadow: 0 0 0 1px #e7d9bf, 0 12px 28px -16px rgba(60, 20, 10, .45);
+  --t-font: 'Inter', system-ui, sans-serif; --t-font-digits: 'Mountains of Christmas', 'Fredoka', serif; --t-digit-weight: 700; --t-digit-track: .02em; --t-fit: .95;
+  --t-bar: repeating-linear-gradient(135deg, #c8102e 0 8px, #fff 8px 16px); --t-bar-h: 8px;
+  --x-snow: #c9d6e3; --x-box: #1f6b3a; --x-ribbon: #d4a017;
+}
+@media (prefers-color-scheme: dark){
+  .theme-christmas{
+    --t-bg: radial-gradient(120% 90% at 50% 0%, #1d4a31 0%, #0f2a1d 70%); --t-bg-solid: #0f2a1d;
+    --t-fg: #fdf6e3; --t-muted: #b6c9b5; --t-edge: #24513a; --t-hover: #1a3d2b; --t-track: #24513a;
+    --t-accent: #e63946; --t-btn-bg: #1a3d2b; --t-btn-fg: #fdf6e3;
+    --t-shadow: 0 0 0 1px #24513a, 0 12px 28px -16px #000; --x-snow: #fff; --x-box: #c8102e;
+  }
+}
+.theme-christmas .card-title{ font-family: 'Mountains of Christmas', serif; font-size: 16px; font-weight: 700; }
+.theme-christmas .x-wire{ fill: none; stroke: #2f4a36; stroke-width: 1.2; opacity: .6; }
+.theme-christmas .x-bulbs circle{ opacity: .85; }
+.theme-christmas .x-bulbs circle:nth-child(4n){ fill: #e63946; }
+.theme-christmas .x-bulbs circle:nth-child(4n+1){ fill: #f4c430; }
+.theme-christmas .x-bulbs circle:nth-child(4n+2){ fill: #2a9d8f; }
+.theme-christmas .x-bulbs circle:nth-child(4n+3){ fill: #4d7cfe; }
+.theme-christmas[data-state="running"] .x-bulbs circle, .theme-christmas[data-state="alarming"] .x-bulbs circle{ animation: twinkle 1.2s ease-in-out infinite; animation-delay: calc(var(--i) * -.3s); }
+.theme-christmas .x-snow circle{ fill: var(--x-snow); opacity: 0; }
+.theme-christmas[data-state="running"] .x-snow circle{ animation: snow 7s linear infinite; animation-delay: calc(var(--i) * -.5s); }
+.theme-christmas .x-gift{ transform: translate(174px, 168px) scale(.55); }
+.theme-christmas .x-box{ fill: var(--x-box); }
+.theme-christmas .x-ribbon, .theme-christmas .x-bow{ fill: var(--x-ribbon); }
+.theme-christmas .x-lid{ transition: transform .5s cubic-bezier(.3, 1.6, .5, 1); }
+.theme-christmas[data-state="alarming"] .x-lid, .theme-christmas[data-state="finished"] .x-lid{ transform: translate(14px, -26px) rotate(18deg); }
+.theme-christmas[data-state="alarming"] .x-gift{ animation: giftHop .5s ease-in-out infinite; }
+@keyframes snow{ 0%{ opacity: 0; transform: translate(0, 0); } 10%{ opacity: .9; } 100%{ opacity: .9; transform: translate(-14px, 230px); } }
+@keyframes giftHop{ 50%{ transform: translate(174px, 160px) scale(.55); } }
+
+/* ---------- Halloween: pumpkin orange on midnight purple ---------- */
+.theme-halloween{
+  --t-art-size: 56%;
+  --t-bg: linear-gradient(180deg, #fff3e3 0%, #ffe3c4 100%); --t-bg-solid: #fff3e3;
+  --t-fg: #2b1433; --t-muted: #7a5a6e; --t-edge: #f5cfa4; --t-hover: #ffe8cf; --t-track: #f5d6b3;
+  --t-accent: #e8650c; --t-on-accent: #fff; --t-warn: #9b3fb5; --t-alarm: #b3142b;
+  --t-btn-bg: #ffe8cf; --t-btn-fg: #2b1433; --t-btn-radius: 10px; --t-radius: 16px;
+  --t-shadow: 0 12px 28px -16px rgba(80, 30, 0, .5);
+  --t-font: 'Inter', system-ui, sans-serif; --t-font-digits: 'Fredoka', system-ui, sans-serif; --t-digit-weight: 600; --t-digit-track: 0;
+  --h-moon: #fbe7a1; --h-glow: #ffd23f;
+}
+@media (prefers-color-scheme: dark){
+  .theme-halloween{
+    --t-bg: radial-gradient(120% 90% at 80% 0%, #3a1f52 0%, #160b20 70%); --t-bg-solid: #160b20;
+    --t-fg: #f7e9ff; --t-muted: #b89ac8; --t-edge: #34204a; --t-hover: #24142f; --t-track: #34204a;
+    --t-accent: #ff8c1a; --t-on-accent: #160b20; --t-warn: #c77dff; --t-alarm: #ff4d4d;
+    --t-btn-bg: #24142f; --t-btn-fg: #f7e9ff; --t-shadow: 0 12px 28px -16px #000;
+  }
+}
+.theme-halloween .card-title{ font-family: 'Creepster', cursive; font-size: 16px; font-weight: 400; letter-spacing: .04em; }
+.theme-halloween .display{ color: var(--t-accent); }
+.theme-halloween[data-state="finished"] .display{ color: var(--t-muted); }
+.theme-halloween .h-moon{ fill: var(--h-moon); opacity: .5; }
+.theme-halloween .h-bats path{ fill: var(--t-fg); opacity: 0; }
+.theme-halloween[data-state="alarming"] .h-bats path{ animation: bats 2.2s ease-in infinite; animation-delay: calc(var(--i) * -.6s); }
+.theme-halloween .h-lobe{ fill: #e8650c; }
+.theme-halloween .h-lobe.mid{ fill: #f07a1e; }
+.theme-halloween .h-stem{ fill: #4a6b2a; }
+.theme-halloween .h-face{ fill: #3a1606; transition: fill .3s; }
+.theme-halloween[data-state="running"] .h-face, .theme-halloween[data-state="alarming"] .h-face{ fill: var(--h-glow); animation: candle .18s ease-in-out infinite alternate; }
+.theme-halloween[data-state="alarming"] .h-pumpkin{ animation: rattle .15s linear infinite; }
+@keyframes candle{ to{ opacity: .65; } }
+@keyframes bats{ 0%{ opacity: 0; transform: translate(0, 40px) scale(.6); } 20%{ opacity: .8; } 100%{ opacity: 0; transform: translate(140px, -60px) scale(1.2); } }
+
+/* ---------- Easter: pastels; the egg cracks, a chick pops out ---------- */
+.theme-easter{
+  --t-art-size: 50%;
+  --t-bg: linear-gradient(180deg, #fdfbe6 0%, #eef8e8 100%); --t-bg-solid: #fdfbe6;
+  --t-fg: #3b3a5a; --t-muted: #7c7a9c; --t-edge: #e4e8c8; --t-hover: #f1f4dc; --t-track: #e4e2f2;
+  --t-accent: #8e6fd6; --t-on-accent: #fff; --t-warn: #d9822b; --t-alarm: #d64f6b;
+  --t-btn-bg: #fff; --t-btn-fg: #3b3a5a; --t-btn-radius: 99px; --t-radius: 28px;
+  --t-shadow: 0 6px 0 #e9e4f7, 0 14px 28px -18px rgba(60, 50, 120, .4);
+  --t-font: 'Chewy', 'Fredoka', system-ui, sans-serif; --t-font-ui: 'Fredoka', system-ui, sans-serif; --t-font-digits: 'Chewy', 'Fredoka', sans-serif; --t-digit-weight: 400; --t-digit-track: .02em;
+  --t-bar: linear-gradient(90deg, #ffd6e7, #fff1a8, #c8f0d4, #d9ccff); --t-bar-h: 8px;
+}
+@media (prefers-color-scheme: dark){
+  .theme-easter{
+    --t-bg: linear-gradient(180deg, #232438 0%, #1c2a24 100%); --t-bg-solid: #212333;
+    --t-fg: #f2f0ff; --t-muted: #aeb0cc; --t-edge: #33354d; --t-hover: #2a2c42; --t-track: #33354d;
+    --t-accent: #b59bff; --t-on-accent: #1c1d2c; --t-btn-bg: #2a2c42; --t-btn-fg: #f2f0ff;
+    --t-shadow: 0 6px 0 #16172a, 0 14px 28px -18px #000;
+  }
+}
+.theme-easter .card-title{ font-family: 'Chewy', cursive; font-size: 15px; font-weight: 400; }
+.theme-easter .e-grass{ fill: #9ed89a; opacity: .7; }
+.theme-easter .e-shell, .theme-easter .e-bottom{ fill: #cdb8ff; }
+.theme-easter .e-stripe{ fill: none; stroke: #fff1a8; stroke-width: 4; stroke-linecap: round; }
+.theme-easter .e-crack{ fill: none; stroke: #5b4a8a; stroke-width: 2; stroke-linejoin: round;
+  stroke-dasharray: 90; stroke-dashoffset: calc((1 - var(--p, 0)) * 90px); transition: stroke-dashoffset .5s; }
+.theme-easter .e-top{ transition: transform .5s cubic-bezier(.3, 1.6, .5, 1); }
+.theme-easter .e-chick{ transform: translateY(20px); transition: transform .5s cubic-bezier(.3, 1.6, .5, 1); }
+.theme-easter .e-chick-body{ fill: #ffd84d; }
+.theme-easter .e-eye{ fill: #2b2340; }
+.theme-easter .e-beak{ fill: #ff9f1c; }
+.theme-easter[data-state="alarming"] .e-top, .theme-easter[data-state="finished"] .e-top{ transform: translate(10px, -28px) rotate(20deg); }
+.theme-easter[data-state="alarming"] .e-chick, .theme-easter[data-state="finished"] .e-chick{ transform: translateY(-14px); }
+.theme-easter[data-state="alarming"] .e-chick{ animation: chickHop .4s ease-in-out infinite; }
+.theme-easter[data-state="running"] .e-bottom, .theme-easter[data-state="running"] .e-top{ animation: wobble 2s ease-in-out infinite; transform-box: view-box; transform-origin: 150px 190px; }
+@keyframes chickHop{ 50%{ transform: translateY(-22px); } }
+@keyframes wobble{ 25%{ rotate: -4deg; } 75%{ rotate: 4deg; } }
+
+/* ---------- Valentine's Day: pinks and reds; a heart that fills ---------- */
+.theme-valentine{
+  --t-art-size: 52%;
+  --t-bg: linear-gradient(180deg, #fff4f6 0%, #ffe3ea 100%); --t-bg-solid: #fff4f6;
+  --t-fg: #5c0f24; --t-muted: #a0566b; --t-edge: #ffc9d6; --t-hover: #ffe7ed; --t-track: #ffd3de;
+  --t-accent: #e0245e; --t-on-accent: #fff; --t-warn: #d9822b; --t-alarm: #c2185b;
+  --t-btn-bg: #fff; --t-btn-fg: #5c0f24; --t-btn-radius: 99px; --t-radius: 24px;
+  --t-shadow: 0 12px 28px -16px rgba(160, 20, 60, .45);
+  --t-font: 'Fredoka', system-ui, sans-serif; --t-font-digits: 'Fredoka', system-ui, sans-serif; --t-digit-weight: 600; --t-digit-track: 0;
+  --t-bar: linear-gradient(90deg, #ff8fab, #e0245e);
+}
+@media (prefers-color-scheme: dark){
+  .theme-valentine{
+    --t-bg: linear-gradient(180deg, #2e0d18 0%, #1e0810 100%); --t-bg-solid: #260b14;
+    --t-fg: #ffe3ea; --t-muted: #d98ea3; --t-edge: #4a1a2a; --t-hover: #38111f; --t-track: #4a1a2a;
+    --t-accent: #ff4d7d; --t-on-accent: #1e0810; --t-btn-bg: #38111f; --t-btn-fg: #ffe3ea;
+    --t-shadow: 0 12px 28px -16px #000;
+  }
+}
+.theme-valentine .card-title{ font-family: 'Pacifico', cursive; font-size: 15px; font-weight: 400; }
+.theme-valentine .v-heart-bg{ fill: var(--t-track); }
+.theme-valentine .v-heart{ fill: none; stroke: var(--t-accent); stroke-width: 3; }
+.theme-valentine .v-fill{ fill: var(--t-accent); transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(var(--p, 0)); transition: transform .5s; opacity: .85; }
+.theme-valentine[data-type="counter"]:not(.no-progress) .v-fill, .theme-valentine[data-state="alarming"] .v-fill, .theme-valentine[data-state="finished"] .v-fill{ transform: scaleY(var(--p, 1)); }
+.theme-valentine .v-floaters path{ fill: var(--t-accent); opacity: 0; }
+.theme-valentine[data-state="running"] .v-floaters path{ animation: floatUp 6s ease-in infinite; animation-delay: calc(var(--i) * -1.2s); }
+.theme-valentine[data-state="alarming"] .v-floaters path{ animation: floatUp 1.8s ease-in infinite; animation-delay: calc(var(--i) * -.36s); }
+.theme-valentine[data-state="alarming"] .v-heart, .theme-valentine[data-state="alarming"] .v-heart-bg{ animation: beat .8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes floatUp{ 0%{ opacity: 0; translate: 0 0; } 15%{ opacity: .55; } 100%{ opacity: 0; translate: 10px -200px; } }
+@keyframes beat{ 15%{ scale: 1.12; } 30%{ scale: 1; } 45%{ scale: 1.08; } 60%{ scale: 1; } }
+
+/* ---------- New Year: midnight and gold; champagne and fireworks ---------- */
+.theme-newyear{
+  --t-art-size: 100%;
+  --t-bg: linear-gradient(180deg, #faf6ec 0%, #f0e7d2 100%); --t-bg-solid: #faf6ec;
+  --t-fg: #141a33; --t-muted: #6b6a7c; --t-edge: #e3d6b3; --t-hover: #f2ead6; --t-track: #e6dcc2;
+  --t-accent: #a8822a; --t-on-accent: #fff; --t-warn: #c0532b; --t-alarm: #b3261e;
+  --t-btn-bg: transparent; --t-btn-fg: #141a33; --t-btn-border: 1px solid #cdb67a; --t-btn-radius: 3px; --t-radius: 6px;
+  --t-shadow: 0 12px 28px -18px rgba(40, 30, 10, .5);
+  --t-font: 'Inter', system-ui, sans-serif; --t-font-digits: 'Limelight', 'Playfair Display', serif; --t-digit-weight: 400; --t-digit-track: .02em; --t-fit: .85;
+  --t-title-track: .16em; --t-title-case: uppercase; --t-bar: linear-gradient(90deg, #a8822a, #f3d98b, #a8822a); --t-bar-h: 3px;
+  --ny-glass: rgba(20, 26, 51, .35);
+}
+@media (prefers-color-scheme: dark){
+  .theme-newyear{
+    --t-bg: radial-gradient(120% 90% at 50% 0%, #1f2a5c 0%, #0b1026 70%); --t-bg-solid: #0b1026;
+    --t-fg: #f5ecd0; --t-muted: #a9a5c2; --t-edge: #232d5e; --t-hover: #141b40; --t-track: #232d5e;
+    --t-accent: #e6c35c; --t-on-accent: #0b1026; --t-btn-fg: #f5ecd0; --t-btn-border: 1px solid #6b5a2a;
+    --t-shadow: 0 12px 28px -16px #000; --ny-glass: rgba(245, 236, 208, .5);
+  }
+}
+.theme-newyear .cbtn.primary{ background: linear-gradient(180deg, #f3d98b, #b8912f); color: #141a33; border-color: #b8912f; }
+.theme-newyear .ny-stars circle{ fill: var(--t-accent); opacity: .5; animation: twinkle 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * -.4s); }
+.theme-newyear .ny-burst line{ stroke: var(--t-accent); stroke-width: 2; stroke-linecap: round; }
+.theme-newyear .ny-burst:nth-of-type(3n+2) line{ stroke: #e63970; }
+.theme-newyear .ny-burst:nth-of-type(3n) line{ stroke: #3fb6e0; }
+.theme-newyear .ny-burst{ opacity: 0; }
+.theme-newyear[data-state="alarming"] .ny-burst, .theme-newyear[data-type="sleeps"][data-state="finished"] .ny-burst{ animation: burst 1.6s ease-out infinite; animation-delay: calc(var(--i) * -.5s); }
+.theme-newyear .ny-glass{ fill: none; stroke: var(--ny-glass); stroke-width: 1.5; }
+.theme-newyear .ny-wine{ fill: #f3d98b; opacity: .75; }
+.theme-newyear .ny-bubbles circle{ fill: #fff; opacity: 0; }
+.theme-newyear[data-state="running"] .ny-bubbles circle{ animation: fizzUp 1.6s linear infinite; animation-delay: calc(var(--i) * -.4s); }
+@keyframes burst{ 0%{ opacity: 0; scale: .2; } 20%{ opacity: 1; } 100%{ opacity: 0; scale: 1.2; } }
+.theme-newyear .ny-burst{ transform-box: fill-box; transform-origin: center; }
+@keyframes fizzUp{ 0%{ opacity: 0; transform: translateY(0); } 20%{ opacity: .9; } 100%{ opacity: 0; transform: translateY(-18px); } }
+
+/* ---------- Bonfire Night: smoky sky, a bonfire, sparkler trail, rockets ---------- */
+.theme-bonfire{
+  --t-art-size: 100%;
+  --t-bg: linear-gradient(180deg, #ece6ea 0%, #e2d6cf 100%); --t-bg-solid: #ece6ea;
+  --t-fg: #241a1f; --t-muted: #6f5e62; --t-edge: #d6c8c2; --t-hover: #e4dad6; --t-track: #d9ccc6;
+  --t-accent: #e2531a; --t-on-accent: #fff; --t-warn: #b8860b; --t-alarm: #b3261e;
+  --t-btn-bg: #e4dad6; --t-btn-fg: #241a1f; --t-btn-radius: 8px; --t-radius: 12px;
+  --t-shadow: 0 12px 28px -16px rgba(40, 20, 10, .5);
+  --t-font: 'Inter', system-ui, sans-serif; --t-font-digits: 'Bungee', 'Inter', sans-serif; --t-digit-weight: 400; --t-digit-track: 0; --t-fit: .72;
+  --t-bar: linear-gradient(90deg, #ffb347, #ff6a00, #e2531a);
+}
+@media (prefers-color-scheme: dark){
+  .theme-bonfire{
+    --t-bg: radial-gradient(100% 80% at 80% 100%, #4a2412 0%, #1a1420 55%, #0e0b12 100%); --t-bg-solid: #14101a;
+    --t-fg: #fbeee4; --t-muted: #b5a2a0; --t-edge: #2c2230; --t-hover: #221a27; --t-track: #2c2230;
+    --t-accent: #ff7a1a; --t-on-accent: #14101a; --t-btn-bg: #221a27; --t-btn-fg: #fbeee4;
+    --t-shadow: 0 12px 28px -16px #000;
+  }
+}
+.theme-bonfire .bn-trail{ fill: none; stroke: #ffd166; stroke-width: 2.5; stroke-linecap: round; opacity: .7;
+  stroke-dasharray: 220; stroke-dashoffset: calc((1 - var(--p, 0)) * 220px); transition: stroke-dashoffset .5s; filter: drop-shadow(0 0 3px #ffb347); }
+.theme-bonfire .bn-logs{ fill: none; stroke: #5a3420; stroke-width: 6; stroke-linecap: round; }
+.theme-bonfire .bn-flame.o{ fill: #ff7a1a; }
+.theme-bonfire .bn-flame.i{ fill: #ffd166; }
+.theme-bonfire .bn-fire{ opacity: .45; transform: scale(.7); transition: transform .5s, opacity .5s; }
+.theme-bonfire .bn-flame{ transform-box: fill-box; transform-origin: 50% 100%; }
+.theme-bonfire[data-state="running"] .bn-fire, .theme-bonfire[data-state="alarming"] .bn-fire{ opacity: .9; transform: scale(1); }
+.theme-bonfire[data-state="running"] .bn-flame.o{ animation: burn .45s ease-in-out infinite alternate; }
+.theme-bonfire[data-state="running"] .bn-flame.i{ animation: burn .3s ease-in-out infinite alternate-reverse; }
+.theme-bonfire .bn-sparks circle{ fill: #ffcf70; opacity: 0; }
+.theme-bonfire[data-state="running"] .bn-sparks circle{ animation: ember 2s ease-out infinite; animation-delay: calc(var(--i) * -.4s); }
+.theme-bonfire .bn-rockets g{ stroke: #ffd166; stroke-width: 2; fill: #ff6a00; opacity: 0; }
+.theme-bonfire[data-state="alarming"] .bn-rockets g, .theme-bonfire[data-type="sleeps"][data-state="finished"] .bn-rockets g{ animation: rocketUp 1.8s ease-in infinite; animation-delay: calc(var(--i) * -.6s); }
+@keyframes rocketUp{ 0%{ opacity: 1; translate: 0 0; } 80%{ opacity: 1; translate: 0 -170px; } 100%{ opacity: 0; translate: 0 -190px; } }
+
+/* Narrow cards: keep holiday art clear of the timer's buttons */
+@container card (max-width: 300px){
+  .theme-halloween .art{ --t-art-size: 44%; }
+  .theme-christmas .x-gift{ transform: translate(182px, 176px) scale(.42); }
+  .theme-christmas[data-state="alarming"] .x-gift{ animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce){
   .card[data-state="alarming"]{ outline: 3px solid var(--t-alarm); outline-offset: -3px; }
 }

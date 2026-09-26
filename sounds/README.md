@@ -37,3 +37,14 @@ Every clip is by Joseph Sardin, from [BigSoundBank.com](https://bigsoundbank.com
 | `steam-hiss.mp3` | [Hiss of steam train #7](https://bigsoundbank.com/hiss-of-steam-train-7-s3019.html) | Joseph Sardin | CC0 1.0 |
 | `party-horn.mp3` | [Party horn #2](https://bigsoundbank.com/party-horn-2-s1554.html) | Joseph Sardin | CC0 1.0 |
 | `space-beep.mp3` | [Aerospace communication beep #1](https://bigsoundbank.com/aerospace-beep-1-s2380.html) | Joseph Sardin | CC0 1.0 |
+| `sleigh-bells.mp3` | [Bells of Santa Claus #1](https://bigsoundbank.com/bells-of-santa-claus-s0585.html) | Joseph Sardin | CC0 1.0 |
+| `ho-ho-ho.mp3` | [Santa Claus, Oh Oh Oh #1](https://bigsoundbank.com/santa-claus-oh-oh-oh-1-s2074.html) | Joseph Sardin | CC0 1.0 |
+| `door-creak.mp3` | [Creaking Door #1](https://bigsoundbank.com/creaking-door-s0302.html) | Joseph Sardin | CC0 1.0 |
+| `witch-cackle.mp3` | [Strident Laughter](https://bigsoundbank.com/strident-laughter-s0489.html) | Joseph Sardin | CC0 1.0 |
+| `chick-chirp.mp3` | [Chick that chirp](https://bigsoundbank.com/chick-that-chirp-s0672.html) | Joseph Sardin | CC0 1.0 |
+| `kiss.mp3` | [Kiss #1](https://bigsoundbank.com/kiss-1-s2196.html) | Joseph Sardin | CC0 1.0 |
+| `fireworks.mp3` | [Fireworks far Away](https://bigsoundbank.com/fireworks-far-away-s1050.html) | Joseph Sardin | CC0 1.0 |
+| `firecracker.mp3` | [Firecracker with wick #4](https://bigsoundbank.com/firecracker-with-wick-4-s1140.html) | Joseph Sardin | CC0 1.0 |
+| `sparkler.mp3` | [Sparkling Candle #1](https://bigsoundbank.com/sparkling-candle-1-s1278.html) | Joseph Sardin | CC0 1.0 |
+| `champagne-cork.mp3` | [Champagne cork #2](https://bigsoundbank.com/champagne-cork-2-s0648.html) | Joseph Sardin | CC0 1.0 |
+| `glasses-clink.mp3` | [Cheers, Champagne Flute #1](https://bigsoundbank.com/cheers-champagne-flute-1-s1335.html) | Joseph Sardin | CC0 1.0 |
