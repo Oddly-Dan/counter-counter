@@ -276,9 +276,9 @@
     },
     fields(c){
       return `<div class="field-row">
-          ${field('Start at', `<input type="number" name="start" value="${c.start}" step="any">`)}
-          ${field('Step', `<input type="number" name="step" value="${c.step}" min="1" step="any">`)}
-          ${field('Target', `<input type="number" name="target" value="${c.target ?? ''}" placeholder="None" step="any">`)}
+          ${field('Start at', `<input type="number" name="start" value="${VT.esc(c.start)}" step="any">`)}
+          ${field('Step', `<input type="number" name="step" value="${VT.esc(c.step)}" min="1" step="any">`)}
+          ${field('Target', `<input type="number" name="target" value="${VT.esc(c.target ?? '')}" placeholder="None" step="any">`)}
         </div>
         ${check('allowNegative', 'Allow negative numbers', c.allowNegative)}`;
     },
@@ -416,12 +416,12 @@
           ${field('Start at', `<input type="text" name="start" value="${VT.esc(c.start)}" inputmode="numeric" required>`)}
           ${field('Count to', `<input type="text" name="target" value="${VT.esc(c.target)}" inputmode="numeric" required>`)}
           ${field('Step by', `<input type="text" name="step" value="${VT.esc(c.step)}" inputmode="numeric" required>`)}
-          ${field('Pace (ms)', `<input type="number" name="pace" value="${c.pace}" min="0" inputmode="numeric">`)}
+          ${field('Pace (ms)', `<input type="number" name="pace" value="${VT.esc(c.pace)}" min="0" inputmode="numeric">`)}
         </div>
         ${field('Voice', `<select name="voiceURI">${opts}</select>`)}
         <div class="field-row">
-          ${field('Speed', `<input type="range" name="rate" min="0.5" max="2" step="0.05" value="${c.rate}">`)}
-          ${field('Pitch', `<input type="range" name="pitch" min="0" max="2" step="0.05" value="${c.pitch}">`)}
+          ${field('Speed', `<input type="range" name="rate" min="0.5" max="2" step="0.05" value="${VT.esc(c.rate)}">`)}
+          ${field('Pitch', `<input type="range" name="pitch" min="0" max="2" step="0.05" value="${VT.esc(c.pitch)}">`)}
         </div>
         ${speech ? '' : '<p class="muted">This browser doesn’t support speech synthesis.</p>'}`;
     },
@@ -478,7 +478,7 @@
 
   T.sleeps = {
     label: 'Sleeps', plural: 'Sleeps', one: 'sleeps countdown', many: 'sleeps countdowns', icon: 'moon', events: EVENTS,
-    defaults: () => ({ event: 'christmas', date: '', yearly: true, status: 'idle', celebrated: null }),
+    defaults: () => ({ event: 'christmas', date: '', yearly: true, matchTheme: true, status: 'idle', celebrated: null }),
     // The next occurrence as [year, month, day], or null if a one-off date is unset.
     next(c, now){
       const ev = EVENTS[c.event] || EVENTS.christmas;
