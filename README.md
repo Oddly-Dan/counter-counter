@@ -82,7 +82,7 @@ A theme is a `.theme-<id>` block of `--t-*` tokens in `css/themes.css`, plus an 
 
 ## Credits
 
-Recorded sound effects are by Joseph Sardin, from [BigSoundBank.com](https://bigsoundbank.com/), released under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). They were trimmed and loudness-normalised for this app, and are listed with their sources in `js/credits.js` and `sounds/README.md`. All other sounds are synthesised with the Web Audio API. Fonts are from Google Fonts under the SIL Open Font License. The app shows all of this under **About & credits** in the top bar, in a footer link, and in each card's ⋯ menu for themes that use recorded sounds.
+Recorded sound effects are by Joseph Sardin, from [BigSoundBank.com](https://bigsoundbank.com/), released under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). They were trimmed and loudness-normalised for this app, and are listed with their sources in `js/credits.js` and `sounds/README.md`. All other sounds are synthesised with the Web Audio API. Fonts are from Google Fonts and bundled in `fonts/` (Latin and Latin Extended), so the app makes no requests to Google and works offline. They're under the SIL Open Font License, except Chewy and Mountains of Christmas (Apache License 2.0); see `fonts/README.md`. The app shows all of this under **About & credits** in the top bar, in a footer link, and in each card's ⋯ menu for themes that use recorded sounds.
 
 ## Structure
 
@@ -97,6 +97,7 @@ js/credits.js   sound, font and licence credits
 js/types.js     card types
 js/app.js       state, saving, grid, sort/filter, drag, resize, ticker
 sounds/         CC0 clips (see sounds/README.md)
+fonts/          bundled web fonts and their licences (see fonts/README.md)
 ```
 
 ## Licence

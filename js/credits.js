@@ -86,7 +86,10 @@
         <tbody>${rows}</tbody>
       </table></div>
       <h3>Fonts</h3>
-      <p>${VT.credits.fonts.map(esc).join(', ')}, from <a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a>
-        under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener">SIL Open Font License</a>.</p>`;
+      <p>${VT.credits.fonts.map(esc).join(', ')}, from <a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a>,
+        bundled with the app so nothing is loaded from Google. All are under the
+        <a href="https://openfontlicense.org/" target="_blank" rel="noopener">SIL Open Font License</a>, except Chewy and
+        Mountains of Christmas, which are under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0</a>.
+        Licence texts are in the <code>fonts/licenses</code> folder.</p>`;
   };
 })(window.VT);
